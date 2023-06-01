@@ -8,14 +8,16 @@ namespace Assets.Scripts
     {
         #region Объявление переменных
         [SerializeField] private GameObject[] _nests = new GameObject[30];          // Массив объектов с координатами
+        [SerializeField] private int _maxSpellTier = 3;                             // Максимальный уровень заклинаний
 
-        private readonly Quaternion _rotation = new(0,0,0,1);
+        public static bool FirstSelected;
+        public static string FirstSelectedTag;
 
         #region Массивы заклинаний
 
-        [SerializeField] private GameObject[] _spellsLevel1 = new GameObject[3];    // Массив заклинаний 1-го уровня
-        [SerializeField] private GameObject[] _spellsLevel2 = new GameObject[3];    // Массив заклинаний 2-го уровня
-        [SerializeField] private GameObject[] _spellsLevel3 = new GameObject[3];    // Массив заклинаний 3-го уровня
+        [SerializeField] private GameObject[] _spellsTier1 = new GameObject[3];    // Массив заклинаний 1-го уровня
+        [SerializeField] private GameObject[] _spellsTier2 = new GameObject[3];    // Массив заклинаний 2-го уровня
+        [SerializeField] private GameObject[] _spellsTier3 = new GameObject[3];    // Массив заклинаний 3-го уровня
 
         #endregion
 
@@ -84,7 +86,7 @@ namespace Assets.Scripts
         private int SelectRandomSpell()
         {
             var rnd = new Random();
-            var result = rnd.Next(_spellsLevel1.Length);
+            var result = rnd.Next(_spellsTier1.Length);
             return result;
         }
 
@@ -94,9 +96,9 @@ namespace Assets.Scripts
         /// <param name="spell">вызываемый объект</param>
         /// <param name="position">координаты</param>
         /// <param name="rotation">поворот</param>
-        private static void SpawnSpell(GameObject spell, Vector3 position, Quaternion rotation)
+        private static void SpawnSpell(GameObject spell, Vector3 position)
         {
-            Instantiate(spell, position, rotation);
+            Instantiate(spell, position, Quaternion.identity);
         }
 
         /// <summary>
@@ -108,8 +110,17 @@ namespace Assets.Scripts
             {
                 var spell = SelectRandomSpell();
                 var position = FindSpawnPlace();
-                SpawnSpell(_spellsLevel1[spell], position, _rotation);
+                SpawnSpell(_spellsTier1[spell], position);
             }
+        }
+
+        /// <summary>
+        /// Метод, возвращающий максимальный уровень заклинаний
+        /// </summary>
+        /// <returns>максимальный уровень</returns>
+        public int MaxLevelTier()
+        {
+            return _maxSpellTier;
         }
     }
 }

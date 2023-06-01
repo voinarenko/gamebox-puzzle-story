@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Nest
+  - AttackSpell
+  - HealthSpell
+  - DefenseSpell
+  - Selected
   layers:
   - Default
   - TransparentFX

@@ -790,15 +790,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _spellsLevel1:
+  _maxSpellTier: 3
+  _spellsTier1:
   - {fileID: 4074501266664166018, guid: 50c74cf51c9ca8b4294b2a7d66cf1e65, type: 3}
   - {fileID: 4222295906956346818, guid: 32b8a2239530c324192168471d751655, type: 3}
   - {fileID: 3035028542107387108, guid: 4e6f8642f25cfea4790d1f69d80be0df, type: 3}
-  _spellsLevel2:
+  _spellsTier2:
   - {fileID: 5274971351348481953, guid: fab80465fe5c411498e91c8573d77fbb, type: 3}
   - {fileID: 1151910929057786847, guid: c5af43c094badb8408f4b0ead7ae7a72, type: 3}
   - {fileID: 5661576189664331545, guid: 19c1f3f473de78443802f2402146c71d, type: 3}
-  _spellsLevel3:
+  _spellsTier3:
   - {fileID: 533277892730759166, guid: a38ced8b73feec74cb8b20d92f868837, type: 3}
   - {fileID: 9062944101267085599, guid: fd8d9c3af17eaf242b9ad3304fab3aac, type: 3}
   - {fileID: 6368464573047155581, guid: b2e24ab6defd0014698d2a54f8f1f327, type: 3}
