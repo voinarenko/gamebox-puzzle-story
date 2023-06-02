@@ -1,4 +1,5 @@
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using Random = System.Random;
 
@@ -7,11 +8,13 @@ namespace Assets.Scripts
     public class SpellGenerator : MonoBehaviour
     {
         #region Объявление переменных
-        [SerializeField] private GameObject[] _nests = new GameObject[30];          // Массив объектов с координатами
-        [SerializeField] private int _maxSpellTier = 3;                             // Максимальный уровень заклинаний
 
-        public static bool FirstSelected;
-        public static string FirstSelectedTag;
+        [SerializeField] private GameObject[] _nests = new GameObject[30];          // Массив объектов с координатами
+
+        private bool _firstSelected;                              // Наличие выделенного объекта
+        private string _firstSelectedTag;                         // Тэг выделенного объекта
+        private int _firstSelectedTier;                           // Уровень выделенного объекта
+
 
         #region Массивы заклинаний
 
@@ -23,17 +26,55 @@ namespace Assets.Scripts
 
         #endregion
 
-        // Start is called before the first frame update
+
+        #region Методы
+
+        /// <summary>
+        /// Start is called before the first frame update
+        /// </summary>
         private void Start()
         {
             _nests = GameObject.FindGameObjectsWithTag("Nest");                     // Заполняем массив объектами
         }
 
-        // Update is called once per frame
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
         private void Update()
         {
         
         }
+
+        #region Методы выдачи значений переменных
+
+        /// <summary>
+        /// Метод получения значения наличия выделенного объекта
+        /// </summary>
+        /// <returns>наличие выделенного объекта</returns>
+        public bool GetFirstSelected()
+        {
+            return _firstSelected;
+        }
+
+        /// <summary>
+        /// Метод получения значения тэга выделенного объекта
+        /// </summary>
+        /// <returns>значение тэга</returns>
+        public string GetFirstSelectedTag()
+        {
+            return _firstSelectedTag;
+        }
+
+        /// <summary>
+        /// Метод получения значения уровня выделенного объекта
+        /// </summary>
+        /// <returns>значение уровня</returns>
+        public int GetFirstSelectedTier()
+        {
+            return _firstSelectedTier;
+        }
+
+        #endregion
 
         /// <summary>
         /// Метод поиска свободного места на поле
@@ -57,6 +98,22 @@ namespace Assets.Scripts
                 placeIsFound = true;
             }
             return result;
+        }
+
+        private void FreeNest(GameObject target)
+        {
+            Collider[] colliders;
+            if ((colliders = Physics.OverlapSphere(target.transform.position, 100f /* Radius */)).Length <= 1) //Presuming the object you are testing also has a collider 0 otherwise
+            {
+                Debug.Log(colliders.Length);
+                return;
+            }
+            foreach (var c in colliders)
+            {
+                var go = c.gameObject; //This is the game object you collided with
+                if (go == gameObject) continue; //Skip the object itself
+                go.GetComponent<OccupationStatusScript>().IsOccupied = false; //Do something
+            }
         }
 
         /// <summary>
@@ -115,12 +172,88 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод, возвращающий максимальный уровень заклинаний
+        /// Метод определения типа заклинания по тэгу объекта
         /// </summary>
-        /// <returns>максимальный уровень</returns>
-        public int MaxLevelTier()
+        /// <returns>номер позиции в массиве</returns>
+        private int FindSpell()
         {
-            return _maxSpellTier;
+            return _firstSelectedTag switch
+            {
+                "AttackSpell" => 0,
+                "HealthSpell" => 1,
+                "DefenseSpell" => 2,
+                _ => 0
+            };
         }
+
+        /// <summary>
+        /// Метод создания заклинания выше уровнем, чем слитые
+        /// </summary>
+        /// <param name="position">координаты создания</param>
+        public void NextTierSpell(Vector3 position)
+        {
+            var spell = FindSpell();
+            switch (_firstSelectedTier)
+            {
+                case 1:
+                    SpawnSpell(_spellsTier2[spell], position);
+                    break;
+                case 2:
+                    SpawnSpell(_spellsTier3[spell], position);
+                    break;
+                case 3:
+                    break;
+            }
+        }
+
+        #region Методы обработки дейчствий с заклинаниями
+
+        /// <summary>
+        /// Метод выделения объекта
+        /// </summary>
+        /// <param name="target">объект</param>
+        public void Select(GameObject target)
+        {
+            _firstSelectedTag =  target.tag;                                                    // присваиваем глобальной переменной тэг текущего объекта
+            _firstSelectedTier = target.GetComponent<TierLevel>().Tier;                         // уровень текущего объекта
+            target.tag = "Selected";                                                            // меняем тэг текущего объекта
+            _firstSelected = true;                                                              // отмечаем наличие выделенного объекта
+            target.GetComponent<SpriteRenderer>().color = Color.yellow;                         // меняем цвет текущего объекта
+        }
+
+        /// <summary>
+        /// Метод снятия выделения с объекта
+        /// </summary>
+        /// <param name="target">объект</param>
+        public void Deselect(GameObject target)
+        {
+            target.tag = _firstSelectedTag;                                                     // возвращаем тэг
+            _firstSelectedTag = null;                                                           // сбрасываем тэг выделенного объекта
+            _firstSelected = false;                                                             // удаляем наличие выделенного объекта
+            target.GetComponent<SpriteRenderer>().color = Color.white;                          // возвращаем обычный цвет
+        }
+
+        /// <summary>
+        /// Метод слияния двух одинаковых объектов в один, уровнем выше
+        /// </summary>
+        /// <param name="target">объект</param>
+        public void Merge(GameObject target)
+        {
+            var selected = GameObject.FindWithTag("Selected");                         // находим выделенный объект
+            Vector2 moveTo = target.transform.position;                                       // задаём координаты движения
+            selected.transform.DOMove(moveTo, 0.5f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
+            {
+                NextTierSpell(moveTo);                                                        // создаём новый объект уровнем выше вместо текущего
+                FreeNest(selected);
+                Destroy(selected);                                                              // уничтожаем первый объект
+                Destroy(target);                                                                // и текущий
+                _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
+                _firstSelected = false;                                                         // и наличие выделенного объекта
+            });
+        }
+
+        #endregion
+
+        #endregion
     }
 }
