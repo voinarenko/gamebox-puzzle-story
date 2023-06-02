@@ -40,7 +40,7 @@ namespace Assets.Scripts
             }
             else if (_spellGenerator.GetFirstSelected() &&                                                           // если объект уже выделен
                      CompareTag(_spellGenerator.GetFirstSelectedTag()) &&                                            // его тэг совпадает с текущим
-                     gameObject.GetComponent<TierLevel>().Tier == _spellGenerator.GetFirstSelectedTier())            // его уровень совпадает с текущим
+                     gameObject.GetComponent<SpellData>().Tier == _spellGenerator.GetFirstSelectedTier())            // его уровень совпадает с текущим
             {
                 _spellGenerator.Merge(gameObject);
             }

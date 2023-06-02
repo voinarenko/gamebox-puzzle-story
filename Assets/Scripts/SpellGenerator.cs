@@ -9,11 +9,12 @@ namespace Assets.Scripts
     {
         #region Объявление переменных
 
-        [SerializeField] private GameObject[] _nests = new GameObject[30];          // Массив объектов с координатами
+        private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
+        private static int _nestId;                                                    // Номер позиции в массиве
 
-        private bool _firstSelected;                              // Наличие выделенного объекта
-        private string _firstSelectedTag;                         // Тэг выделенного объекта
-        private int _firstSelectedTier;                           // Уровень выделенного объекта
+        private bool _firstSelected;                                                // Наличие выделенного объекта
+        private string _firstSelectedTag;                                           // Тэг выделенного объекта
+        private int _firstSelectedTier;                                             // Уровень выделенного объекта
 
 
         #region Массивы заклинаний
@@ -94,26 +95,20 @@ namespace Assets.Scripts
                     continue;
                 }
                 _nests[randomPosition].GetComponent<OccupationStatusScript>().IsOccupied = true;
+                _nestId = randomPosition;
                 result = _nests[randomPosition].transform.position;
                 placeIsFound = true;
             }
             return result;
         }
 
+        /// <summary>
+        /// Метод, снимающий метку занятости после уничтожения объекта
+        /// </summary>
+        /// <param name="target">уничтоженный объект</param>
         private void FreeNest(GameObject target)
         {
-            Collider[] colliders;
-            if ((colliders = Physics.OverlapSphere(target.transform.position, 100f /* Radius */)).Length <= 1) //Presuming the object you are testing also has a collider 0 otherwise
-            {
-                Debug.Log(colliders.Length);
-                return;
-            }
-            foreach (var c in colliders)
-            {
-                var go = c.gameObject; //This is the game object you collided with
-                if (go == gameObject) continue; //Skip the object itself
-                go.GetComponent<OccupationStatusScript>().IsOccupied = false; //Do something
-            }
+            _nests[target.GetComponent<SpellData>().NestId].GetComponent<OccupationStatusScript>().IsOccupied = false;
         }
 
         /// <summary>
@@ -152,10 +147,11 @@ namespace Assets.Scripts
         /// </summary>
         /// <param name="spell">вызываемый объект</param>
         /// <param name="position">координаты</param>
-        /// <param name="rotation">поворот</param>
-        private static void SpawnSpell(GameObject spell, Vector3 position)
+        /// <param name="place">позиция в массиве</param>
+        private static void SpawnSpell(GameObject spell, Vector3 position, int place)
         {
-            Instantiate(spell, position, Quaternion.identity);
+            var newSpell = Instantiate(spell, position, Quaternion.identity);
+            newSpell.GetComponent<SpellData>().NestId = place;
         }
 
         /// <summary>
@@ -167,7 +163,7 @@ namespace Assets.Scripts
             {
                 var spell = SelectRandomSpell();
                 var position = FindSpawnPlace();
-                SpawnSpell(_spellsTier1[spell], position);
+                SpawnSpell(_spellsTier1[spell], position, _nestId);
             }
         }
 
@@ -190,18 +186,20 @@ namespace Assets.Scripts
         /// Метод создания заклинания выше уровнем, чем слитые
         /// </summary>
         /// <param name="position">координаты создания</param>
-        public void NextTierSpell(Vector3 position)
+        /// <param name="place">позиция в массиве</param>
+        public void NextTierSpell(Vector3 position, int place)
         {
             var spell = FindSpell();
             switch (_firstSelectedTier)
             {
                 case 1:
-                    SpawnSpell(_spellsTier2[spell], position);
+                    SpawnSpell(_spellsTier2[spell], position, place);
                     break;
                 case 2:
-                    SpawnSpell(_spellsTier3[spell], position);
+                    SpawnSpell(_spellsTier3[spell], position, place);
                     break;
                 case 3:
+                    _nests[place].GetComponent<OccupationStatusScript>().IsOccupied = false;
                     break;
             }
         }
@@ -215,7 +213,7 @@ namespace Assets.Scripts
         public void Select(GameObject target)
         {
             _firstSelectedTag =  target.tag;                                                    // присваиваем глобальной переменной тэг текущего объекта
-            _firstSelectedTier = target.GetComponent<TierLevel>().Tier;                         // уровень текущего объекта
+            _firstSelectedTier = target.GetComponent<SpellData>().Tier;                         // уровень текущего объекта
             target.tag = "Selected";                                                            // меняем тэг текущего объекта
             _firstSelected = true;                                                              // отмечаем наличие выделенного объекта
             target.GetComponent<SpriteRenderer>().color = Color.yellow;                         // меняем цвет текущего объекта
@@ -243,7 +241,7 @@ namespace Assets.Scripts
             Vector2 moveTo = target.transform.position;                                       // задаём координаты движения
             selected.transform.DOMove(moveTo, 0.5f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
             {
-                NextTierSpell(moveTo);                                                        // создаём новый объект уровнем выше вместо текущего
+                NextTierSpell(moveTo, target.GetComponent<SpellData>().NestId);               // создаём новый объект уровнем выше вместо текущего
                 FreeNest(selected);
                 Destroy(selected);                                                              // уничтожаем первый объект
                 Destroy(target);                                                                // и текущий

@@ -759,40 +759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ff70a9454df3f4f96083ce830b922f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nests:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _firstSelected: 0
-  _firstSelectedTag: 
-  _firstSelectedTier: 0
   _spellsTier1:
   - {fileID: 4074501266664166018, guid: 50c74cf51c9ca8b4294b2a7d66cf1e65, type: 3}
   - {fileID: 4222295906956346818, guid: 32b8a2239530c324192168471d751655, type: 3}

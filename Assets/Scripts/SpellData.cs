@@ -2,8 +2,9 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class TierLevel : MonoBehaviour
+    public class SpellData : MonoBehaviour
     {
         public int Tier;
+        public int NestId;
     }
 }
