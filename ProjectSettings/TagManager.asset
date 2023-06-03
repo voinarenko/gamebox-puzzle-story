@@ -9,6 +9,9 @@ TagManager:
   - HealthSpell
   - DefenseSpell
   - Selected
+  - CheckPoint
+  - Enemy
+  - Chest
   layers:
   - Default
   - TransparentFX

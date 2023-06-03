@@ -4,13 +4,13 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        #region ѕеременные экранов
+        #region ѕеременные
 
-        private GameObject _screen;                                 // текущий экран
-        [SerializeField] private GameObject _mainMenuScreen;        // Ќачальный экран
-        [SerializeField] private GameObject _levelSelectScreen;     // Ёкран настроек
-        [SerializeField] private GameObject _gameLevelScreen;       // Ёкран выхода из игры
-        [SerializeField] private GameObject _defeatedMenuScreen;    // Ёкран выхода из игры
+        private GameObject _screen;                                     // текущий экран
+        [SerializeField] private GameObject _mainMenuScreen;            // Ќачальный экран
+        [SerializeField] private GameObject _levelSelectScreen;         // Ёкран настроек
+        [SerializeField] private GameObject _gameLevelScreen;           // Ёкран выхода из игры
+        [SerializeField] private GameObject _defeatedMenuScreen;        // Ёкран выхода из игры
 
         #endregion
 
@@ -47,6 +47,7 @@ namespace Assets.Scripts
             _screen.SetActive(false);
             _gameLevelScreen.SetActive(true);
             _screen = _gameLevelScreen;
+            PlayerController.StartGame();
         }
 
         /// <summary>
