@@ -10,7 +10,7 @@ namespace Assets.Scripts
         #region Объявление переменных
 
         private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
-        private static int _nestId;                                                    // Номер позиции в массиве
+        private static int _nestId;                                                 // Номер позиции в массиве
 
         private bool _firstSelected;                                                // Наличие выделенного объекта
         private string _firstSelectedTag;                                           // Тэг выделенного объекта
@@ -165,6 +165,18 @@ namespace Assets.Scripts
                 var position = FindSpawnPlace();
                 SpawnSpell(_spellsTier1[spell], position, _nestId);
             }
+        }
+
+        /// <summary>
+        /// Метод, очищающий игровое поле
+        /// </summary>
+        public static void ClearTheField()
+        {
+            var spellsLeft = FindObjectsOfType<SpellData>();
+            foreach ( var spell in spellsLeft) { Destroy(spell.gameObject); }
+
+            var nestsLeft = FindObjectsOfType<OccupationStatusScript>();
+            foreach (var nest in nestsLeft) { nest.IsOccupied = false; }
         }
 
         /// <summary>

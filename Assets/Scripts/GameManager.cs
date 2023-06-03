@@ -66,6 +66,7 @@ namespace Assets.Scripts
         /// </summary>
         public void DefeatedMenu()
         {
+            SpellGenerator.ClearTheField();
             Time.timeScale = 0;
             _screen.SetActive(false);
             _defeatedMenuScreen.SetActive(true);
