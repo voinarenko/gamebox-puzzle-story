@@ -1,17 +1,25 @@
 using DG.Tweening;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
+        // ”правление игровым процессом в зоне Side
+
         #region ѕеременные
 
+        [SerializeField] private GameObject _eventSystem;       // обработка событий
         [SerializeField] private GameObject[] _enemies;         // массив врагов
         [SerializeField] private GameObject[] _checkpoints;     // массив контрольных точек
         [SerializeField] private GameObject[] _chests;          // массив сундуков
 
-        private static int _episode;                            // текущий эпизод
+        public int CurrentEpisode = 1;       // текущий эпизод
+        private static int _episode;                            // переменна€ дл€ переключател€ эпизодов
+
+        private Vector3 _startPosition;                         // начальное положение игрока
 
         #endregion
 
@@ -20,7 +28,7 @@ namespace Assets.Scripts
         /// </summary>
         private void Start()
         {
-            
+            _startPosition = gameObject.transform.position;
         }
 
         /// <summary>
@@ -32,6 +40,16 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// ћетод, мен€ющий текущий эпизод
+        /// </summary>
+        public void SelectNextEpisode()
+        {
+            if (CurrentEpisode == 4) { _eventSystem.GetComponent<GameManager>().DefeatedMenu(); }
+            CurrentEpisode++;
+            _episode = CurrentEpisode;
+        }
+
+        /// <summary>
         /// ћетод выбора эпизода
         /// </summary>
         /// <param name="episode">номер эпизода</param>
@@ -40,16 +58,16 @@ namespace Assets.Scripts
             switch (episode)
             {
                 case 1:
-                    PlayerStoryMovement(0, 1, 0);
+                    PlayerStoryMovement(0, 1, 0);       // Ёпизод 1
                     break;
                 case 2:
-                    PlayerStoryMovement(1, 2, 0);
+                    PlayerStoryMovement(1, 2, 0);       // Ёпизод 2
                     break;
                 case 3:
-                    PlayerStoryMovement(2, 3, 1);
+                    PlayerStoryMovement(2, 3, 1);       // Ёпизод 3
                     break;
                 case 4:
-                    PlayerStoryMovement(3, 0, 2);
+                    PlayerStoryMovement(3, 0, 2);       // Ёпизод 4
                     break;
             }
         }

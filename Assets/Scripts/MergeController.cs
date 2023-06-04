@@ -5,6 +5,8 @@ namespace Assets.Scripts
 {
     public class MergeController : MonoBehaviour, IPointerClickHandler
     {
+        // Управление слияниями
+
         private SpellGenerator _spellGenerator;                                                    // Генератор заклинаний
 
         /// <summary>

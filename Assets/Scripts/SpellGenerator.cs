@@ -1,4 +1,5 @@
 using System.Linq;
+using Assets.Scripts.Stats;
 using DG.Tweening;
 using UnityEngine;
 using Random = System.Random;
@@ -7,6 +8,8 @@ namespace Assets.Scripts
 {
     public class SpellGenerator : MonoBehaviour
     {
+        // Генератор заклинаний
+
         #region Объявление переменных
 
         private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
@@ -16,6 +19,8 @@ namespace Assets.Scripts
         private string _firstSelectedTag;                                           // Тэг выделенного объекта
         private int _firstSelectedTier;                                             // Уровень выделенного объекта
 
+        [SerializeField] private int _enemyMove = 3;                                // ход врага
+        private int _moveCounter;                                                   // счётчик ходов
 
         #region Массивы заклинаний
 
@@ -36,14 +41,6 @@ namespace Assets.Scripts
         private void Start()
         {
             _nests = GameObject.FindGameObjectsWithTag("Nest");                     // Заполняем массив объектами
-        }
-
-        /// <summary>
-        /// Update is called once per frame
-        /// </summary>
-        private void Update()
-        {
-        
         }
 
         #region Методы выдачи значений переменных
@@ -205,14 +202,58 @@ namespace Assets.Scripts
             switch (_firstSelectedTier)
             {
                 case 1:
+                    PerformAction(spell);
                     SpawnSpell(_spellsTier2[spell], position, place);
                     break;
                 case 2:
+                    PerformAction(spell);
                     SpawnSpell(_spellsTier3[spell], position, place);
                     break;
                 case 3:
+                    PerformAction(spell);
                     _nests[place].GetComponent<OccupationStatusScript>().IsOccupied = false;
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Метод, выполняющий действие, в зависимости от слитого заклинания
+        /// </summary>
+        /// <param name="spell"></param>
+        public void PerformAction(int spell)
+        {
+            var player = GameObject.FindWithTag("Player");
+            var enemy = GameObject.FindWithTag("Enemy");
+            switch (spell)
+            { 
+                case 0:
+                    enemy.GetComponent<Health>().TakeDamage(player.GetComponent<DamageDealer>().GetDamage() * _firstSelectedTier);
+                    break;
+                case 1:
+                    player.GetComponent<Health>().Heal(player.GetComponent<Health>().GetHealAmount() * _firstSelectedTier);
+                    break;
+                case 2:
+                    player.GetComponent<Defense>().SetDefense(player.GetComponent<Defense>().GetDefenseAmount() * _firstSelectedTier);
+                    break;
+            }
+
+            // Проверяем существование врага после атаки
+            enemy = GameObject.FindWithTag("Enemy");
+
+            // Если враг уничтожен, запускаем следующий эпизод
+            if (enemy == null) player.GetComponent<PlayerController>().SelectNextEpisode();
+            else
+            {
+                // Считаем ходы до атаки врага
+                if (_moveCounter == _enemyMove)
+                {
+                    player.GetComponent<Health>().TakeDamage(enemy.GetComponent<DamageDealer>().GetDamage());
+                    _moveCounter = 0;
+                }
+                else
+                {
+                    _moveCounter++;
+                }
             }
         }
 

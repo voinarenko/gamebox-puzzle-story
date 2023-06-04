@@ -4,6 +4,8 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
+        // Управление игровыми экранами
+
         #region Переменные
 
         private GameObject _screen;                                     // текущий экран
