@@ -11,6 +11,8 @@ namespace Assets.Scripts
 
         #region Переменные
 
+        [SerializeField] private SpellGenerator _spellGenerator;    // генератор заклинаний
+
         [SerializeField] private GameObject _eventSystem;       // обработка событий
         [SerializeField] private GameObject[] _enemies;         // массив врагов
         [SerializeField] private GameObject[] _checkpoints;     // массив контрольных точек
@@ -84,6 +86,7 @@ namespace Assets.Scripts
         /// <param name="chest">позиция сундука</param>
         private void PlayerStoryMovement(int enemy, int checkpoint, int chest)
         {
+            _spellGenerator.IsAnimating = true;
             _episode = 0;
             var target = GameObject.FindWithTag("CheckPoint");
             transform.DOMove(target.transform.position, 5f).OnComplete(() =>
@@ -101,9 +104,13 @@ namespace Assets.Scripts
         /// <param name="value">позиция сундука</param>
         private void GenerateChest(int value)
         {
+            _spellGenerator.IsAnimating = true;
             var position = new Vector3(0, 0, 80);
             var chest = Instantiate(_chests[value], position, Quaternion.identity);
-            chest.transform.DOScale(new Vector3(2, 2, 2), 1f);
+            chest.transform.DOScale(new Vector3(2, 2, 2), 1f).OnComplete(() =>
+            {
+                _spellGenerator.IsAnimating = false;
+            });
         }
         
         /// <summary>

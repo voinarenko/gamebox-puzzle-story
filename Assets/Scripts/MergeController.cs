@@ -23,7 +23,7 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public void OnPointerClick(PointerEventData eventData)
         {
-            ClickMerge();
+            if (!_spellGenerator.IsAnimating) ClickMerge();
         }
 
         /// <summary>

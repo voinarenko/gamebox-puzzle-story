@@ -22,7 +22,7 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public void OnPointerClick(PointerEventData eventData)
         {
-            ClickChest();
+            if (!_spellGenerator.IsAnimating) ClickChest();
         }
 
         /// <summary>

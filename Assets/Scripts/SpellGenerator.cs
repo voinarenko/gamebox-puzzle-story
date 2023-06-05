@@ -12,6 +12,8 @@ namespace Assets.Scripts
 
         #region Объявление переменных
 
+        public bool IsAnimating;                                                    // состояние анимации для блокировки нажатий    
+
         [SerializeField] private GameObject _eventSystem;                           // обработка событий
 
         private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
@@ -333,6 +335,7 @@ namespace Assets.Scripts
         /// <param name="target">объект</param>
         public void Merge(GameObject target)
         {
+            IsAnimating = true;
             var selected = GameObject.FindWithTag("Selected");                         // находим выделенный объект
             Vector2 moveTo = target.transform.position;                                       // задаём координаты движения
             selected.transform.DOMove(moveTo, 0.5f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
@@ -344,6 +347,7 @@ namespace Assets.Scripts
                 _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
                 _firstSelected = false;                                                         // и наличие выделенного объекта
                 CheckStatus();
+                IsAnimating = false;
             });
         }
 
