@@ -679,6 +679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5cedb41c8de2514eba74426f8de8620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spellGenerator: {fileID: 234765881}
   _eventSystem: {fileID: 967308855}
   _enemies:
   - {fileID: 780504494}
@@ -1123,6 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ff70a9454df3f4f96083ce830b922f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAnimating: 0
   _eventSystem: {fileID: 967308855}
   _enemyMove: 1
   _spellsTier1:
