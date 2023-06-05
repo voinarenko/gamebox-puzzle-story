@@ -10,7 +10,7 @@ namespace Assets.Scripts.Stats
 
         #region Переменные
 
-        [SerializeField] private TMP_Text _health;
+        [SerializeField] private TMP_Text _healthText;
 
         #endregion
 
@@ -24,16 +24,8 @@ namespace Assets.Scripts.Stats
 
         private void Update()
         {
-            _health.text = CurrentHealth.ToString(CultureInfo.InvariantCulture);
+            _healthText.text = CurrentHealth.ToString(CultureInfo.InvariantCulture);
             //if (!IsAlive) {PlayerDead();}
-        }
-        
-        /// <summary>
-        /// Метод гибели игрока
-        /// </summary>
-        private void PlayerDead()
-        {
-            EventSystem.GetComponent<GameManager>().DefeatedMenu();
         }
     }
 }

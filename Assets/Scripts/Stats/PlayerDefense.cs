@@ -1,9 +1,12 @@
+using System.Globalization;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Stats
 {
     public class PlayerDefense : Defense
     {
+        [SerializeField] private TMP_Text _defenseText;
         [SerializeField] private GameObject[] _images;
 
         /// <summary>
@@ -11,6 +14,7 @@ namespace Assets.Scripts.Stats
         /// </summary>
         private void Update()
         {
+            _defenseText.text = CurrentDefense.ToString(CultureInfo.InvariantCulture);
             switch (CurrentDefense)
             {
                 case >= 0 and <= 30:

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Stats
 
         #region Переменные
 
-        [SerializeField] private TMP_Text _health;
+        [SerializeField] private TMP_Text _healthText;
 
         #endregion
 
@@ -26,15 +26,7 @@ namespace Assets.Scripts.Stats
         /// </summary>
         private void Update()
         {
-            _health.text = CurrentHealth.ToString(CultureInfo.InvariantCulture);
-        }
-        
-        /// <summary>
-        /// Метод гибели врага
-        /// </summary>
-        private void EnemyDead()
-        {
-            GameObject.FindWithTag("Player").GetComponent<PlayerController>().SelectNextEpisode();
+            _healthText.text = CurrentHealth.ToString(CultureInfo.InvariantCulture);
         }
     }
 }
