@@ -1,7 +1,6 @@
-using System.Linq;
 using Assets.Scripts.Stats;
 using DG.Tweening;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -76,6 +75,8 @@ namespace Assets.Scripts
 
         #endregion
 
+        #region Методы работы с полем
+
         /// <summary>
         /// Метод поиска свободного места на поле
         /// </summary>
@@ -100,7 +101,7 @@ namespace Assets.Scripts
             }
             return result;
         }
-
+        
         /// <summary>
         /// Метод, снимающий метку занятости после уничтожения объекта
         /// </summary>
@@ -129,6 +130,35 @@ namespace Assets.Scripts
         {
             return nest.GetComponent<OccupationStatusScript>().IsOccupied;
         }
+
+        /// <summary>
+        /// Метод заполнения поля заклинаниями
+        /// </summary>
+        public void FillTheField()
+        {
+            while (!FieldIsFull())
+            {
+                var spell = SelectRandomSpell();
+                var position = FindSpawnPlace();
+                SpawnSpell(_spellsTier1[spell], position, _nestId);
+            }
+        }
+
+        /// <summary>
+        /// Метод, очищающий игровое поле
+        /// </summary>
+        public static void ClearTheField()
+        {
+            var spellsLeft = FindObjectsOfType<SpellData>();
+            foreach ( var spell in spellsLeft) { Destroy(spell.gameObject); }
+
+            var nestsLeft = FindObjectsOfType<OccupationStatusScript>();
+            foreach (var nest in nestsLeft) { nest.IsOccupied = false; }
+        }
+
+        #endregion
+
+        #region Методы работы с заклинаниями
 
         /// <summary>
         /// Метод выбора случайного заклинания в соответствии с его весом
@@ -166,31 +196,6 @@ namespace Assets.Scripts
         {
             var newSpell = Instantiate(spell, position, Quaternion.identity);
             newSpell.GetComponent<SpellData>().NestId = place;
-        }
-
-        /// <summary>
-        /// Метод заполнения поля заклинаниями
-        /// </summary>
-        public void FillTheField()
-        {
-            while (!FieldIsFull())
-            {
-                var spell = SelectRandomSpell();
-                var position = FindSpawnPlace();
-                SpawnSpell(_spellsTier1[spell], position, _nestId);
-            }
-        }
-
-        /// <summary>
-        /// Метод, очищающий игровое поле
-        /// </summary>
-        public static void ClearTheField()
-        {
-            var spellsLeft = FindObjectsOfType<SpellData>();
-            foreach ( var spell in spellsLeft) { Destroy(spell.gameObject); }
-
-            var nestsLeft = FindObjectsOfType<OccupationStatusScript>();
-            foreach (var nest in nestsLeft) { nest.IsOccupied = false; }
         }
 
         /// <summary>
@@ -279,7 +284,11 @@ namespace Assets.Scripts
                     player = GameObject.FindWithTag("Player");
 
                     // Если игрок уничтожен, выводим экран поражения
-                    if (player == null) { _eventSystem.GetComponent<GameManager>().DefeatedMenu(); }
+                    if (player == null)
+                    {
+                        player.GetComponent<Health>().ResetHealth();
+                        _eventSystem.GetComponent<GameManager>().DefeatedMenu();
+                    }
                 }
                 else
                 {
@@ -288,6 +297,8 @@ namespace Assets.Scripts
                 }
             }
         }
+
+        #endregion
 
         #region Методы обработки дейчствий с заклинаниями
 
@@ -335,8 +346,6 @@ namespace Assets.Scripts
                 CheckStatus();
             });
         }
-
-
 
         #endregion
 

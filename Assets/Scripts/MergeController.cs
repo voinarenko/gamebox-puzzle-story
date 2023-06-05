@@ -17,7 +17,6 @@ namespace Assets.Scripts
             _spellGenerator = FindObjectOfType(typeof(SpellGenerator)) as SpellGenerator;
         }
 
-
         /// <summary>
         /// Метод обработки нажатия на левую клавишу мыши
         /// </summary>

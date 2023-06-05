@@ -16,7 +16,7 @@ namespace Assets.Scripts
         [SerializeField] private GameObject[] _checkpoints;     // массив контрольных точек
         [SerializeField] private GameObject[] _chests;          // массив сундуков
 
-        public int CurrentEpisode = 1;       // текущий эпизод
+        public int CurrentEpisode = 1;                          // текущий эпизод
         private static int _episode;                            // переменная для переключателя эпизодов
 
         private Vector3 _startPosition;                         // начальное положение игрока
@@ -101,10 +101,11 @@ namespace Assets.Scripts
         /// <param name="value">позиция сундука</param>
         private void GenerateChest(int value)
         {
-            var chest = Instantiate(_chests[value], Vector3.zero, Quaternion.identity);
+            var position = new Vector3(0, 0, 80);
+            var chest = Instantiate(_chests[value], position, Quaternion.identity);
             chest.transform.DOScale(new Vector3(2, 2, 2), 1f);
         }
-
+        
         /// <summary>
         /// Метод сброса позиции игрока
         /// </summary>

@@ -8,7 +8,6 @@ namespace Assets.Scripts.Stats
 
         #region Переменные
 
-        [SerializeField] protected GameObject EventSystem;      // Обработка событий
         [SerializeField] protected float MaxHealth;             // Максимальное здоровье
         [SerializeField] protected float CurrentHealth;         // Текущее здоровье
         [SerializeField] protected float HealAmount;            // Входящее лечение
@@ -27,6 +26,7 @@ namespace Assets.Scripts.Stats
             CheckMinHealth();
             CheckIsAlive();
             if (IsAlive) return;
+            CurrentHealth = MaxHealth;
             gameObject.SetActive(false);
         }
 
@@ -81,6 +81,14 @@ namespace Assets.Scripts.Stats
         private void CheckIsAlive()
         {
             IsAlive = CurrentHealth > 0;
+        }
+
+        /// <summary>
+        /// Метод сброса здоровья
+        /// </summary>
+        public void ResetHealth()
+        {
+            CurrentHealth = MaxHealth;
         }
     }
 }
