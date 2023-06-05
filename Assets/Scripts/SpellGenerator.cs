@@ -1,6 +1,7 @@
 using System.Linq;
 using Assets.Scripts.Stats;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -11,6 +12,8 @@ namespace Assets.Scripts
         // Генератор заклинаний
 
         #region Объявление переменных
+
+        [SerializeField] private GameObject _eventSystem;                           // обработка событий
 
         private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
         private static int _nestId;                                                 // Номер позиции в массиве
@@ -31,7 +34,6 @@ namespace Assets.Scripts
         #endregion
 
         #endregion
-
 
         #region Методы
 
@@ -129,13 +131,28 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод выбора случайного заклинания
+        /// Метод выбора случайного заклинания в соответствии с его весом
         /// </summary>
         /// <returns>случайный индекс</returns>
         private int SelectRandomSpell()
         {
-            var rnd = new Random();
-            var result = rnd.Next(_spellsTier1.Length);
+            var spellSelected = false;
+            var result = 0;
+
+            while (!spellSelected)
+            {
+                var rnd = new Random();
+                var i = rnd.Next(100);      // случайное значение в диапазоне весов
+                for (var j = 0; j < _spellsTier1.Length; j++)
+                {
+                    // проверяем вхождение в диапазон весов заклинания
+                    if (i < _spellsTier1[j].GetComponent<SpellData>().MinProbabilityRange ||
+                        i > _spellsTier1[j].GetComponent<SpellData>().MaxProbabilityRange) continue;
+                    result = j;
+                    spellSelected = true;
+                    break;
+                }
+            }
             return result;
         }
 
@@ -145,7 +162,7 @@ namespace Assets.Scripts
         /// <param name="spell">вызываемый объект</param>
         /// <param name="position">координаты</param>
         /// <param name="place">позиция в массиве</param>
-        private static void SpawnSpell(GameObject spell, Vector3 position, int place)
+        private void SpawnSpell(GameObject spell, Vector3 position, int place)
         {
             var newSpell = Instantiate(spell, position, Quaternion.identity);
             newSpell.GetComponent<SpellData>().NestId = place;
@@ -222,36 +239,51 @@ namespace Assets.Scripts
         /// <param name="spell"></param>
         public void PerformAction(int spell)
         {
-            var player = GameObject.FindWithTag("Player");
-            var enemy = GameObject.FindWithTag("Enemy");
+            var player = GameObject.FindWithTag("Player");      // ищем игрока
+            var enemy = GameObject.FindWithTag("Enemy");        // ищем врага
+
+            // ищем заклинание
             switch (spell)
             { 
-                case 0:
+                case 0:     // атака
                     enemy.GetComponent<Health>().TakeDamage(player.GetComponent<DamageDealer>().GetDamage() * _firstSelectedTier);
                     break;
-                case 1:
+                case 1:     // здоровье
                     player.GetComponent<Health>().Heal(player.GetComponent<Health>().GetHealAmount() * _firstSelectedTier);
                     break;
-                case 2:
+                case 2:     // защита
                     player.GetComponent<Defense>().SetDefense(player.GetComponent<Defense>().GetDefenseAmount() * _firstSelectedTier);
                     break;
             }
+        }
 
-            // Проверяем существование врага после атаки
-            enemy = GameObject.FindWithTag("Enemy");
+        /// <summary>
+        /// Метод проверки состояний игрока и врагов
+        /// </summary>
+        private void CheckStatus()
+        {
+            var player = GameObject.FindWithTag("Player");      // ищем игрока
+            var enemy = GameObject.FindWithTag("Enemy");        // ищем врага
 
             // Если враг уничтожен, запускаем следующий эпизод
-            if (enemy == null) player.GetComponent<PlayerController>().SelectNextEpisode();
+            if (enemy == null) { player.GetComponent<PlayerController>().SelectNextEpisode(); }
             else
             {
                 // Считаем ходы до атаки врага
                 if (_moveCounter == _enemyMove)
                 {
-                    player.GetComponent<Health>().TakeDamage(enemy.GetComponent<DamageDealer>().GetDamage());
+                    player.GetComponent<Health>().TakeDamage(enemy.GetComponent<DamageDealer>().GetDamage());   // наносим урон игроку
                     _moveCounter = 0;
+
+                    // Проверяем существование игрока
+                    player = GameObject.FindWithTag("Player");
+
+                    // Если игрок уничтожен, выводим экран поражения
+                    if (player == null) { _eventSystem.GetComponent<GameManager>().DefeatedMenu(); }
                 }
                 else
                 {
+                    // Увеличиваем счётчик
                     _moveCounter++;
                 }
             }
@@ -300,8 +332,11 @@ namespace Assets.Scripts
                 Destroy(target);                                                                // и текущий
                 _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
                 _firstSelected = false;                                                         // и наличие выделенного объекта
+                CheckStatus();
             });
         }
+
+
 
         #endregion
 

@@ -6,15 +6,19 @@ namespace Assets.Scripts.Stats
 {
     public class PlayerDefense : Defense
     {
-        [SerializeField] private TMP_Text _defenseText;
-        [SerializeField] private GameObject[] _images;
+        // Защита игрока
+
+        [SerializeField] private TMP_Text _defenseText;     // отображение защиты
+        [SerializeField] private GameObject[] _images;      // массив изображений игрока
 
         /// <summary>
         /// Update is called once per frame
         /// </summary>
         private void Update()
         {
-            _defenseText.text = CurrentDefense.ToString(CultureInfo.InvariantCulture);
+            _defenseText.text = CurrentDefense.ToString(CultureInfo.InvariantCulture);  // выводим значение защиты на экран
+
+            // меняем изображение игрока, в зависимости от значения защиты
             switch (CurrentDefense)
             {
                 case >= 0 and <= 30:

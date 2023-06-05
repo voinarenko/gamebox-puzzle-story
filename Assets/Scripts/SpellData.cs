@@ -6,5 +6,7 @@ namespace Assets.Scripts
     {
         public int Tier;
         public int NestId;
+        public int MinProbabilityRange;
+        public int MaxProbabilityRange;
     }
 }

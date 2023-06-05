@@ -44,7 +44,11 @@ namespace Assets.Scripts
         /// </summary>
         public void SelectNextEpisode()
         {
-            if (CurrentEpisode == 4) { _eventSystem.GetComponent<GameManager>().DefeatedMenu(); }
+            if (CurrentEpisode == 4)
+            {
+                _eventSystem.GetComponent<GameManager>().DefeatedMenu();
+                PlayerPositionReset();
+            }
             CurrentEpisode++;
             _episode = CurrentEpisode;
         }
@@ -99,6 +103,14 @@ namespace Assets.Scripts
         {
             var chest = Instantiate(_chests[value], Vector3.zero, Quaternion.identity);
             chest.transform.DOScale(new Vector3(2, 2, 2), 1f);
+        }
+
+        /// <summary>
+        /// Метод сброса позиции игрока
+        /// </summary>
+        public void PlayerPositionReset()
+        {
+            transform.position = _startPosition;
         }
 
         /// <summary>
