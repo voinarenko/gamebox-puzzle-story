@@ -50,6 +50,7 @@ namespace Assets.Scripts
             {
                 _eventSystem.GetComponent<GameManager>().DefeatedMenu();
                 PlayerPositionReset();
+                CurrentEpisode = 0;
             }
             CurrentEpisode++;
             _episode = CurrentEpisode;

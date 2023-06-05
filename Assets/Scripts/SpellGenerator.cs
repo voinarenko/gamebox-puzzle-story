@@ -250,16 +250,22 @@ namespace Assets.Scripts
             var enemy = GameObject.FindWithTag("Enemy");        // ищем врага
 
             // ищем заклинание
+            if (player == null) return;
             switch (spell)
-            { 
-                case 0:     // атака
-                    enemy.GetComponent<Health>().TakeDamage(player.GetComponent<DamageDealer>().GetDamage() * _firstSelectedTier);
+            {
+                case 0: // атака
+                    if (enemy == null) return;
+                    enemy.GetComponent<Health>()
+                        .TakeDamage(player.GetComponent<DamageDealer>().GetDamage() * _firstSelectedTier);
+
                     break;
-                case 1:     // здоровье
-                    player.GetComponent<Health>().Heal(player.GetComponent<Health>().GetHealAmount() * _firstSelectedTier);
+                case 1: // здоровье
+                    player.GetComponent<Health>()
+                        .Heal(player.GetComponent<Health>().GetHealAmount() * _firstSelectedTier);
                     break;
-                case 2:     // защита
-                    player.GetComponent<Defense>().SetDefense(player.GetComponent<Defense>().GetDefenseAmount() * _firstSelectedTier);
+                case 2: // защита
+                    player.GetComponent<Defense>()
+                        .SetDefense(player.GetComponent<Defense>().GetDefenseAmount() * _firstSelectedTier);
                     break;
             }
         }
