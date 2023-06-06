@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts
 {
-    public class MergeController : MonoBehaviour, IPointerClickHandler
+    public class MergeController : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         // Управление слияниями
 
@@ -25,6 +25,17 @@ namespace Assets.Scripts
         {
             if (!_spellGenerator.IsAnimating) ClickMerge();
         }
+
+        /// <summary>
+        /// Метод обработки перетаскивания
+        /// </summary>
+        /// <param name="eventData"></param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public void OnDrag(PointerEventData eventData)
+        {
+            throw new System.NotImplementedException();
+        }
+        
 
         /// <summary>
         /// Метод обработки слияния объектов
