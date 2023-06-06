@@ -1,3 +1,4 @@
+using System.Collections;
 using Assets.Scripts.Stats;
 using DG.Tweening;
 using System.Linq;
@@ -134,16 +135,25 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод заполнения поля заклинаниями
+        /// Интерфейс заполнения поля заклинаниями
         /// </summary>
-        public void FillTheField()
+        private IEnumerator FillTheField()
         {
             while (!FieldIsFull())
             {
                 var spell = SelectRandomSpell();
                 var position = FindSpawnPlace();
                 SpawnSpell(_spellsTier1[spell], position, _nestId);
+                yield return new WaitForSeconds(0.1f);
             }
+        }
+
+        /// <summary>
+        /// Метод заполнения поля заклинаниями для доступа извне
+        /// </summary>
+        public void GenerateSpells()
+        {
+            StartCoroutine(nameof(FillTheField));
         }
 
         /// <summary>
@@ -196,7 +206,13 @@ namespace Assets.Scripts
         /// <param name="place">позиция в массиве</param>
         private void SpawnSpell(GameObject spell, Vector3 position, int place)
         {
+            IsAnimating = true;
             var newSpell = Instantiate(spell, position, Quaternion.identity);
+            newSpell.transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 0.5f).SetEase(Ease.OutBounce).OnComplete(() =>
+            {
+                IsAnimating = false;
+            });
+
             newSpell.GetComponent<SpellData>().NestId = place;
         }
 

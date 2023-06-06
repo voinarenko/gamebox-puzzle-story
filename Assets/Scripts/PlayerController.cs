@@ -13,15 +13,15 @@ namespace Assets.Scripts
 
         [SerializeField] private SpellGenerator _spellGenerator;    // генератор заклинаний
 
-        [SerializeField] private GameObject _eventSystem;       // обработка событий
-        [SerializeField] private GameObject[] _enemies;         // массив врагов
-        [SerializeField] private GameObject[] _checkpoints;     // массив контрольных точек
-        [SerializeField] private GameObject[] _chests;          // массив сундуков
+        [SerializeField] private GameObject _eventSystem;           // обработка событий
+        [SerializeField] private GameObject[] _enemies;             // массив врагов
+        [SerializeField] private GameObject[] _checkpoints;         // массив контрольных точек
+        [SerializeField] private GameObject[] _chests;              // массив сундуков
 
-        public int CurrentEpisode = 1;                          // текущий эпизод
-        private static int _episode;                            // переменная для переключателя эпизодов
+        public int CurrentEpisode = 1;                              // текущий эпизод
+        private static int _episode;                                // переменная для переключателя эпизодов
 
-        private Vector3 _startPosition;                         // начальное положение игрока
+        private Vector3 _startPosition;                             // начальное положение игрока
 
         #endregion
 
@@ -108,7 +108,7 @@ namespace Assets.Scripts
             _spellGenerator.IsAnimating = true;
             var position = new Vector3(0, 0, 80);
             var chest = Instantiate(_chests[value], position, Quaternion.identity);
-            chest.transform.DOScale(new Vector3(2, 2, 2), 1f).OnComplete(() =>
+            chest.transform.DOScale(new Vector3(2, 2, 2), 1f).SetEase(Ease.OutBounce).OnComplete(() =>
             {
                 _spellGenerator.IsAnimating = false;
             });

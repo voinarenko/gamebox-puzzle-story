@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -30,8 +31,12 @@ namespace Assets.Scripts
         /// </summary>
         private void ClickChest()
         {
-            _spellGenerator.FillTheField();
-            Destroy(gameObject);
+            _spellGenerator.GenerateSpells();
+            gameObject.transform.DOScale(Vector3.zero, 0.3f).OnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+
         }
 
     }
