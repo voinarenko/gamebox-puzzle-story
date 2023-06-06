@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.Stats;
 using DG.Tweening;
 using System.Linq;
@@ -14,7 +15,9 @@ namespace Assets.Scripts
         #region Объявление переменных
 
         public bool IsAnimating;                                                    // состояние анимации для блокировки нажатий    
+        public bool IsMerging;                                                      // состояние слияния
 
+        [SerializeField] private GameObject _player;                                // игрок
         [SerializeField] private GameObject _eventSystem;                           // обработка событий
 
         private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
@@ -24,7 +27,7 @@ namespace Assets.Scripts
         private string _firstSelectedTag;                                           // Тэг выделенного объекта
         private int _firstSelectedTier;                                             // Уровень выделенного объекта
 
-        [SerializeField] private int _enemyMove = 3;                                // ход врага
+        [SerializeField] private int _enemyMove;                                    // ход врага
         private int _moveCounter;                                                   // счётчик ходов
 
         #region Массивы заклинаний
@@ -232,6 +235,22 @@ namespace Assets.Scripts
         }
 
         /// <summary>
+        /// Метод определения типа заклинания по тэгу объекта при перемещении
+        /// </summary>
+        /// <param name="spellTag">тэг нового заклинания</param>
+        /// <returns>номер позиции в массиве</returns>
+        private int FindSpell(string spellTag)
+        {
+            return spellTag switch
+            {
+                "AttackSpell" => 0,
+                "HealthSpell" => 1,
+                "DefenseSpell" => 2,
+                _ => 0
+            };
+        }
+
+        /// <summary>
         /// Метод создания заклинания выше уровнем, чем слитые
         /// </summary>
         /// <param name="position">координаты создания</param>
@@ -239,6 +258,32 @@ namespace Assets.Scripts
         public void NextTierSpell(Vector3 position, int place)
         {
             var spell = FindSpell();
+            switch (_firstSelectedTier)
+            {
+                case 1:
+                    PerformAction(spell);
+                    SpawnSpell(_spellsTier2[spell], position, place);
+                    break;
+                case 2:
+                    PerformAction(spell);
+                    SpawnSpell(_spellsTier3[spell], position, place);
+                    break;
+                case 3:
+                    PerformAction(spell);
+                    _nests[place].GetComponent<OccupationStatusScript>().IsOccupied = false;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Метод создания заклинания выше уровнем, чем слитые, при перемещении
+        /// </summary>
+        /// <param name="position">координаты создания</param>
+        /// <param name="place">позиция в массиве</param>
+        /// <param name="spellTag">тэг нового заклинания</param>
+        public void NextTierSpell(Vector3 position, int place, string spellTag)
+        {
+            var spell = FindSpell(spellTag);
             switch (_firstSelectedTier)
             {
                 case 1:
@@ -310,7 +355,7 @@ namespace Assets.Scripts
                     // Если игрок уничтожен, выводим экран поражения
                     if (player == null)
                     {
-                        player.GetComponent<Health>().ResetHealth();
+                        _player.GetComponent<Health>().ResetHealth();
                         _eventSystem.GetComponent<GameManager>().DefeatedMenu();
                     }
                 }
@@ -354,23 +399,86 @@ namespace Assets.Scripts
         /// <summary>
         /// Метод слияния двух одинаковых объектов в один, уровнем выше
         /// </summary>
-        /// <param name="target">объект</param>
+        /// <param name="target">целевой объект</param>
         public void Merge(GameObject target)
         {
             IsAnimating = true;
             var selected = GameObject.FindWithTag("Selected");                         // находим выделенный объект
             Vector2 moveTo = target.transform.position;                                       // задаём координаты движения
-            selected.transform.DOMove(moveTo, 0.5f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
+            selected.transform.DOMove(moveTo, 0.1f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
             {
                 NextTierSpell(moveTo, target.GetComponent<SpellData>().NestId);               // создаём новый объект уровнем выше вместо текущего
-                FreeNest(selected);
+                FreeNest(selected);                                                             // освобождаем место на поле
                 Destroy(selected);                                                              // уничтожаем первый объект
                 Destroy(target);                                                                // и текущий
                 _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
                 _firstSelected = false;                                                         // и наличие выделенного объекта
                 CheckStatus();
+                IsMerging = false;
                 IsAnimating = false;
+                TurnCollidersOn();
             });
+        }
+
+        /// <summary>
+        /// Метод слияния двух одинаковых объектов в один, уровнем выше, при перетягивании
+        /// </summary>
+        /// <param name="self">перетягиваемый объект</param>
+        /// <param name="target">целевой объект</param>
+        public void Merge(GameObject self, GameObject target)
+        {
+            var position = target.transform.position;
+            var nest = target.GetComponent<SpellData>().NestId;
+            var spellTag = target.tag;
+            IsAnimating = true;
+            self.transform.DOScale(Vector3.zero, 0.1f).OnComplete(() =>
+            {
+                FreeNest(self);                                                                 // освобождаем место на поле
+                Destroy(self);                                                                  // уничтожаем первый объект
+                target.transform.DOScale(Vector3.zero, 0.1f).OnComplete(() =>
+                {
+                    Destroy(target);                                                            // уничтожаем цель
+                    NextTierSpell(position, nest, spellTag);                                    // создаём новый объект уровнем выше вместо текущего
+                    _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
+                    _firstSelected = false;                                                         // и наличие выделенного объекта
+                    CheckStatus();
+                    IsAnimating = false;
+                });
+            });
+
+        }
+
+        /// <summary>
+        /// Метод отключения всех коллайдеров на поле
+        /// </summary>
+        public void TurnCollidersOff()
+        {
+            var spells = GetAllSpells();
+            foreach (var spell in spells)
+            {
+                spell.gameObject.GetComponent<Collider2D>().enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Метод включения всех коллайдеров на поле
+        /// </summary>
+        public void TurnCollidersOn()
+        {
+            var spells = GetAllSpells();
+            foreach (var spell in spells)
+            {
+                spell.gameObject.GetComponent<Collider2D>().enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Метод поиска всех заклинаний на поле
+        /// </summary>
+        /// <returns>список заклинаний</returns>
+        private IEnumerable<SpellData> GetAllSpells()
+        {
+            return FindObjectsOfType<SpellData>();
         }
 
         #endregion

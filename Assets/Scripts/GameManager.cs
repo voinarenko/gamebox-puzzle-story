@@ -130,6 +130,4 @@ namespace Assets.Scripts
             _defeatedMenuScreen.SetActive(false);
         }
     }
-
-
 }

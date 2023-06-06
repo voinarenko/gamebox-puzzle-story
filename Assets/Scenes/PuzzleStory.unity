@@ -1125,7 +1125,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimating: 0
+  _player: {fileID: 131014678}
   _eventSystem: {fileID: 967308855}
+  _firstSelected: 0
+  _firstSelectedTag: 
+  _firstSelectedTier: 0
   _enemyMove: 1
   _spellsTier1:
   - {fileID: 4074501266664166018, guid: 50c74cf51c9ca8b4294b2a7d66cf1e65, type: 3}

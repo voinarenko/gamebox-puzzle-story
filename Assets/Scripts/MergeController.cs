@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,8 +11,10 @@ namespace Assets.Scripts
 
         #region Переменные
 
+        private GameObject _self;                                                                   // перетаскиваемый объект
+        private GameObject _target;                                                                 // целевой объект
         private SpellGenerator _spellGenerator;                                                     // Генератор заклинаний
-        private bool _dragging;                                                                     // состояние перетаскивания
+        private bool _canBeMerged;                                                                  // можно слить
         private float _offsetX, _offsetY;                                                           // смещение
         private Vector3 _startPosition;                                                             // начальные координаты
 
@@ -33,11 +34,10 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public override void OnPointerClick(PointerEventData eventData)
         {
-            if (!_spellGenerator.IsAnimating && !_dragging) ClickMerge();
         }
 
         /// <summary>
-        /// Метод обработки длительного нажатия на левую клавишу мыши
+        /// Метод обработки длительного нажатия на левой кнопке мыши
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerDown(PointerEventData eventData)
@@ -53,18 +53,53 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public override void OnDrag(PointerEventData eventData)
         {
-            _dragging = true;
+            //_spellGenerator.TurnCollidersOff();
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePosition.x - _offsetX, mousePosition.y - _offsetY, 90);
+            if (!_spellGenerator.GetFirstSelected()) transform.position = new Vector3(mousePosition.x - _offsetX, mousePosition.y - _offsetY, 90);
         }
 
+        /// <summary>
+        /// Метод обработки отпускания левой кнопки
+        /// </summary>
+        /// <param name="eventData"></param>
         public override void OnPointerUp(PointerEventData eventData)
         {
-            if (!_dragging) return;            
-            transform.DOMove(_startPosition, 1f).SetEase(Ease.OutBounce).OnComplete(() =>
+            Debug.Log("Pointer Up!");
+            _spellGenerator.TurnCollidersOn();
+            if (_canBeMerged)
             {
-                _dragging = false;
-            });
+                _spellGenerator.Merge(_self, _target);
+                _self = null;
+                _target = null;
+                _canBeMerged = false;
+            }
+            else
+            {
+                _spellGenerator.IsAnimating = true;
+                _spellGenerator.TurnCollidersOff();
+                transform.DOMove(_startPosition, 0.1f).SetEase(Ease.OutBounce).OnComplete(() =>
+                {
+                    _spellGenerator.TurnCollidersOn();
+                    _spellGenerator.IsAnimating = false;
+                });
+            }
+            if (gameObject ==  null) return;
+            ClickMerge();
+        }
+
+        /// <summary>
+        /// Метод обработки столкновений
+        /// </summary>
+        /// <param name="collision">целевой объект</param>
+        public void OnTriggerStay2D(Collider2D collision)
+        {
+            Debug.Log("Triggered!");
+            if (!collision.CompareTag(tag) ||
+                GetComponent<SpellData>().Tier != collision.GetComponent<SpellData>().Tier) return;
+            Debug.Log("Match!");
+            _self = gameObject;
+            _target = collision.gameObject;
+            _canBeMerged = true;
         }
 
         /// <summary>
