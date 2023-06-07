@@ -4,20 +4,20 @@ namespace Assets.Scripts.Stats
 {
     public abstract class Health : MonoBehaviour
     {
-        // «доровье
+        // Здоровье
 
         #region ѕеременные
 
-        [SerializeField] protected float MaxHealth;             // ћаксимальное здоровье
-        [SerializeField] protected float CurrentHealth;         // “екущее здоровье
-        [SerializeField] protected float HealAmount;            // ¬ход¤щее лечение
-        [SerializeField] protected bool IsAlive;                // ќбъект жив
+        [SerializeField] protected float MaxHealth;             // максимальное здоровье
+        [SerializeField] protected float CurrentHealth;         // текущее здоровье
+        [SerializeField] protected float HealAmount;            // входящее лечение
+        [SerializeField] protected bool IsAlive;                // объект жив
 
         #endregion
 
 
         /// <summary>
-        /// ћетод получени¤ урона
+        /// Метод получения урона
         /// </summary>
         /// <param name="damage">количество урона</param>
         public void TakeDamage(float damage)
@@ -31,9 +31,9 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// ћетод лечени¤
+        /// Метод лечения
         /// </summary>
-        /// <param name="healing">количество здоровь¤</param>
+        /// <param name="healing">количество здоровья</param>
         public void Heal(float healing)
         {
             CurrentHealth += healing;
@@ -41,16 +41,16 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// ћетод, возвращающий объЄм лечени¤
+        /// Метод, возвращающий объём лечения
         /// </summary>
-        /// <returns>объЄм лечени¤</returns>
+        /// <returns>объЄм лечения</returns>
         public float GetHealAmount()
         {
             return HealAmount;
         }
 
         /// <summary>
-        /// ћетод проверки текущего здоровь¤ Ч не должно опускатьс¤ ниже 0
+        /// Метод проверки текущего здоровья - не должно опускаться ниже 0
         /// </summary>
         private void CheckMinHealth()
         {
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// ћетод проверки текущего здоровь¤ Ч не должно превышать максимальное
+        /// Метод проверки текущего здоровья - не должно превышать максимальное
         /// </summary>
         /// <returns>текущее здоровье</returns>
         private float CheckMaxHealth()
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// ћетод установки текущего здоровь¤ на 0
+        /// Метод установки текущего здоровья на 0
         /// </summary>
         private void SetCurrentHealthToZero()
         {
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// ћетод проверки, жив ли игрок
+        /// Метод проверки, жив ли игрок
         /// </summary>
         private void CheckIsAlive()
         {
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// ћетод сброса здоровь¤
+        /// Метод сброса здоровья
         /// </summary>
         public void ResetHealth()
         {

@@ -6,13 +6,13 @@ namespace Assets.Scripts
 {
     public class MergeController : EventTrigger
     {
-        // ”правление сли¤ни¤ми
+        // Управление слияниями
 
         #region ѕеременные
 
         private GameObject _self;                                                                   // перетаскиваемый объект
         private GameObject _target;                                                                 // целевой объект
-        private SpellGenerator _spellGenerator;                                                     // √енератор заклинаний
+        private SpellGenerator _spellGenerator;                                                     // генератор заклинаний
         private bool _canBeMerged;                                                                  // можно слить
         private float _offsetX, _offsetY;                                                           // смещение
         private Vector3 _startPosition;                                                             // начальные координаты
@@ -28,15 +28,7 @@ namespace Assets.Scripts
         }        
         
         /// <summary>
-        /// ћетод обработки щелчка по левой клавише мыши
-        /// </summary>
-        /// <param name="eventData"></param>
-        public override void OnPointerClick(PointerEventData eventData)
-        {
-        }
-
-        /// <summary>
-        /// ћетод обработки длительного нажати¤ на левой кнопке мыши
+        /// Метод обработки длительного нажатия на левой кнопке мыши
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerDown(PointerEventData eventData)
@@ -47,18 +39,17 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод обработки перетаскивани¤
+        /// Метод обработки перетаскивания
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnDrag(PointerEventData eventData)
         {
-            //_spellGenerator.TurnCollidersOff();
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (!_spellGenerator.GetFirstSelected()) transform.position = new Vector3(mousePosition.x - _offsetX, mousePosition.y - _offsetY, 90);
         }
 
         /// <summary>
-        /// ћетод обработки отпускани¤ левой кнопки
+        /// Метод обработки отпускания левой кнопки мыши
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerUp(PointerEventData eventData)
@@ -86,7 +77,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод обработки столкновений
+        /// Метод обработки столкновений
         /// </summary>
         /// <param name="collision">целевой объект</param>
         public void OnTriggerStay2D(Collider2D collision)
@@ -99,7 +90,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод обработки сли¤ни¤ объектов
+        /// Метод обработки слияния объектов
         /// </summary>
         private void ClickMerge()
         {

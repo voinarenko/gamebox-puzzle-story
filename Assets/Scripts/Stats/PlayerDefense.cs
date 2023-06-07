@@ -6,7 +6,7 @@ namespace Assets.Scripts.Stats
 {
     public class PlayerDefense : Defense
     {
-        // «ащита игрока
+        // Защита игрока
 
         [SerializeField] private TMP_Text _defenseText;     // отображение защиты на экране
         [SerializeField] private GameObject[] _images;      // массив изображений игрока
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Stats
         {
             _defenseText.text = CurrentDefense.ToString(CultureInfo.InvariantCulture);  // выводим значение защиты на экран
 
-            // мен¤ем изображение игрока, в зависимости от значени¤ защиты
+            // меняем изображение игрока, в зависимости от значения защиты
             switch (CurrentDefense)
             {
                 case >= 0 and <= 30:

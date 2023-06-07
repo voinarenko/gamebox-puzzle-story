@@ -5,16 +5,16 @@ namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        // ”правление игровыми экранами
+        // Управление игровыми экранами
 
         #region ѕеременные
 
         #region ƒанные дл¤ сброса при перезапуске
 
-        [SerializeField] private GameObject _spellGenerator;                        // √енератор заклинаний
-        [SerializeField] private GameObject _player;                                // »грок
-        [SerializeField] private GameObject[] _checkpoints;                         // ћассив контрольных точек
-        [SerializeField] private GameObject[] _enemies;                             // ћассив врагов
+        [SerializeField] private GameObject _spellGenerator;                        // генератор заклинаний
+        [SerializeField] private GameObject _player;                                // игрок
+        [SerializeField] private GameObject[] _checkpoints;                         // массив контрольных точек
+        [SerializeField] private GameObject[] _enemies;                             // массив врагов
 
         #endregion
 
@@ -22,10 +22,10 @@ namespace Assets.Scripts
 
         private GameObject _screen;                                     // текущий экран
         private GameObject _level;                                      // текущий уровень
-        [SerializeField] private GameObject _mainMenuScreen;            // Ќачальный экран
-        [SerializeField] private GameObject _levelSelectScreen;         // Ёкран настроек
-        [SerializeField] private GameObject _gameLevelScreen;           // Ёкран выхода из игры
-        [SerializeField] private GameObject _defeatedMenuScreen;        // Ёкран выхода из игры
+        [SerializeField] private GameObject _mainMenuScreen;            // начальный экран
+        [SerializeField] private GameObject _levelSelectScreen;         // экран настроек
+        [SerializeField] private GameObject _gameLevelScreen;           // экран выхода из игры
+        [SerializeField] private GameObject _defeatedMenuScreen;        // экран выхода из игры
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace Assets.Scripts
         #region ћетоды управлени¤ экранами
 
         /// <summary>
-        /// ћетод вызова экрана главного меню
+        /// Метод вызова экрана главного меню
         /// </summary>
         public void MainMenu()
         {
@@ -45,7 +45,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод вызова экрана выбора уровн¤
+        /// Метод вызова экрана выбора уровня
         /// </summary>
         public void LevelSelect()
         {
@@ -56,7 +56,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод вызова экрана игрового уровн¤
+        /// Метод вызова экрана игрового уровня
         /// </summary>
         public void GameLevel()
         {
@@ -69,7 +69,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод вызова перезапуска игрового уровн¤
+        /// Метод вызова перезапуска игрового уровня
         /// </summary>
         public void RestartLevel()
         {
@@ -81,7 +81,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод вызова экрана поражени¤
+        /// Метод вызова экрана поражения
         /// </summary>
         public void DefeatedMenu()
         {
@@ -94,7 +94,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод выхода из игрового уровн¤
+        /// Метод выхода из игрового уровня
         /// </summary>
         public void CloseWindow()
         {
@@ -104,32 +104,32 @@ namespace Assets.Scripts
         #endregion
 
         /// <summary>
-        /// ћетод сброса настроек
+        /// Метод сброса настроек
         /// </summary>
         private void ResetData()
         {
-            // —брасываем здоровье игрока
+            // сбрасываем здоровье игрока
             _player.GetComponent<Health>().ResetHealth();
-            // —брасываем защиту игрока
+            // сбрасываем защиту игрока
             _player.GetComponent<Defense>().ResetDefense();
-            // —брасываем позицию игрока
+            // сбрасываем позицию игрока
             _player.GetComponent<PlayerController>().PlayerPositionReset();
 
-            // —брасываем контрольные точки
+            // сбрасываем контрольные точки
             foreach (var c in _checkpoints)
             {
                 c.SetActive(false);
             }
             _checkpoints[0].SetActive(true);
 
-            // —брасываем врагов
+            // сбрасываем врагов
             foreach (var e in _enemies)
             {
                 e.SetActive(false);
                 e.GetComponent<Health>().ResetHealth();
             }
 
-            // ”ничтожаем сундуки
+            // уничтожаем сундуки
             var chests = GameObject.FindGameObjectsWithTag("Chest");
             foreach (var c in chests)
             {
@@ -137,6 +137,9 @@ namespace Assets.Scripts
             }
         }
 
+        /// <summary>
+        /// Update is called once per frame
+        /// </summary>
         private void Start()
         {
             _screen = _mainMenuScreen;

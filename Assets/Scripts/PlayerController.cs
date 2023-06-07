@@ -7,7 +7,7 @@ namespace Assets.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
-        // ”правление игровым процессом в зоне Side
+        // Управление игровым процессом в зоне Side
 
         #region ѕеременные
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts
         [SerializeField] private GameObject[] _chests;              // массив сундуков
 
         public int CurrentEpisode = 1;                              // текущий эпизод
-        private static int _episode;                                // переменна¤ дл¤ переключател¤ эпизодов
+        private static int _episode;                                // переменная для переключателя эпизодов
 
         private Vector3 _startPosition;                             // начальное положение игрока
 
@@ -34,7 +34,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод запуска игрового сценари¤
+        /// Метод запуска игрового сценария
         /// </summary>
         public static void StartGame()
         {
@@ -42,7 +42,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод, мен¤ющий текущий эпизод
+        /// метод, меняющий текущий эпизод
         /// </summary>
         public void SelectNextEpisode()
         {
@@ -57,7 +57,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод выбора эпизода
+        /// Метод выбора эпизода
         /// </summary>
         /// <param name="episode">номер эпизода</param>
         private void EpisodeSelector(int episode)
@@ -65,26 +65,26 @@ namespace Assets.Scripts
             switch (episode)
             {
                 case 1:
-                    PlayerStoryMovement(0, 1, 0);       // Ёпизод 1
+                    PlayerStoryMovement(0, 1, 0);       // эпизод 1
                     break;
                 case 2:
-                    PlayerStoryMovement(1, 2, 0);       // Ёпизод 2
+                    PlayerStoryMovement(1, 2, 0);       // эпизод 2
                     break;
                 case 3:
-                    PlayerStoryMovement(2, 3, 1);       // Ёпизод 3
+                    PlayerStoryMovement(2, 3, 1);       // эпизод 3
                     break;
                 case 4:
-                    PlayerStoryMovement(3, 0, 2);       // Ёпизод 4
+                    PlayerStoryMovement(3, 0, 2);       // эпизод 4
                     break;
             }
         }
 
         /// <summary>
-        /// ћетод, вызывающий процессы между сражени¤ми
+        /// Метод, вызывающий процессы между сражениями
         /// </summary>
-        /// <param name="enemy">позици¤ врага</param>
-        /// <param name="checkpoint">позици¤ контрольной точки</param>
-        /// <param name="chest">позици¤ сундука</param>
+        /// <param name="enemy">позиция врага</param>
+        /// <param name="checkpoint">позиция контрольной точки</param>
+        /// <param name="chest">позиция сундука</param>
         private void PlayerStoryMovement(int enemy, int checkpoint, int chest)
         {
             _spellGenerator.IsAnimating = true;
@@ -100,9 +100,9 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод, вызывающий сундук
+        /// Метод, вызывающий сундук
         /// </summary>
-        /// <param name="value">позици¤ сундука</param>
+        /// <param name="value">позиция сундука</param>
         private void GenerateChest(int value)
         {
             _spellGenerator.IsAnimating = true;
@@ -115,7 +115,7 @@ namespace Assets.Scripts
         }
         
         /// <summary>
-        /// ћетод сброса позиции игрока
+        /// Метод сброса позиции игрока
         /// </summary>
         public void PlayerPositionReset()
         {

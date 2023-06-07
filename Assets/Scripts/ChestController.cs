@@ -6,9 +6,9 @@ namespace Assets.Scripts
 {
     public class ChestController : MonoBehaviour, IPointerClickHandler
     {
-        // ”правление сундуком
+        // Управление сундуком
 
-        private SpellGenerator _spellGenerator;                                                    // √енератор заклинаний
+        private SpellGenerator _spellGenerator;                                                    // генератор заклинаний
 
         /// <summary>
         /// Start is called before the first frame update
@@ -20,7 +20,7 @@ namespace Assets.Scripts
 
 
         /// <summary>
-        /// ћетод обработки нажати¤ на левую клавишу мыши
+        /// Метод обработки щелчка по левой кнопке мыши
         /// </summary>
         /// <param name="eventData"></param>
         public void OnPointerClick(PointerEventData eventData)
@@ -29,7 +29,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// ћетод обработки открыти¤ сундука
+        /// Метод обработки открытия сундука
         /// </summary>
         private void ClickChest()
         {
