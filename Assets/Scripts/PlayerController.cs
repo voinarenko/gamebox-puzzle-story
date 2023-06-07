@@ -11,6 +11,7 @@ namespace Assets.Scripts
 
         #region ѕеременные
 
+        private bool _isMoving;                                     // состояние движения
         [SerializeField] private SpellGenerator _spellGenerator;    // генератор заклинаний
 
         [SerializeField] private GameObject _eventSystem;           // обработка событий
@@ -87,7 +88,7 @@ namespace Assets.Scripts
         /// <param name="chest">позиция сундука</param>
         private void PlayerStoryMovement(int enemy, int checkpoint, int chest)
         {
-            _spellGenerator.IsAnimating = true;
+            _isMoving = true;
             _episode = 0;
             var target = GameObject.FindWithTag("CheckPoint");
             transform.DOMove(target.transform.position, 5f).OnComplete(() =>
@@ -95,6 +96,7 @@ namespace Assets.Scripts
                 target.SetActive(false);
                 _enemies[enemy].SetActive(true);
                 _checkpoints[checkpoint].SetActive(true);
+                _isMoving = false;
                 GenerateChest(chest);
             });
         }
@@ -128,6 +130,7 @@ namespace Assets.Scripts
         private void Update()
         {
             EpisodeSelector(_episode);
+            if (_isMoving) _spellGenerator.IsAnimating = _isMoving;
         }
     }
 }

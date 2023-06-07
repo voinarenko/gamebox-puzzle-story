@@ -44,6 +44,8 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public override void OnDrag(PointerEventData eventData)
         {
+            if (_spellGenerator.IsAnimating) return;
+            GetComponent<SpriteRenderer>().sortingOrder = 2;
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (!_spellGenerator.GetFirstSelected()) transform.position = new Vector3(mousePosition.x - _offsetX, mousePosition.y - _offsetY, 90);
         }
@@ -54,6 +56,7 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public override void OnPointerUp(PointerEventData eventData)
         {
+            if (_spellGenerator.IsAnimating) return;
             _spellGenerator.TurnCollidersOn();
             if (_canBeMerged)
             {
@@ -68,6 +71,7 @@ namespace Assets.Scripts
                 _spellGenerator.TurnCollidersOff();
                 transform.DOMove(_startPosition, 0.1f).SetEase(Ease.OutBounce).OnComplete(() =>
                 {
+                    GetComponent<SpriteRenderer>().sortingOrder = 1;
                     _spellGenerator.TurnCollidersOn();
                     _spellGenerator.IsAnimating = false;
                 });
