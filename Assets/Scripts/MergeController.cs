@@ -1,4 +1,4 @@
-using DG.Tweening;
+п»їusing DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,16 +6,16 @@ namespace Assets.Scripts
 {
     public class MergeController : EventTrigger
     {
-        // Управление слияниями
+        // вЂќРїСЂР°РІР»РµРЅРёРµ СЃР»РёВ¤РЅРёВ¤РјРё
 
-        #region Переменные
+        #region С•РµСЂРµРјРµРЅРЅС‹Рµ
 
-        private GameObject _self;                                                                   // перетаскиваемый объект
-        private GameObject _target;                                                                 // целевой объект
-        private SpellGenerator _spellGenerator;                                                     // Генератор заклинаний
-        private bool _canBeMerged;                                                                  // можно слить
-        private float _offsetX, _offsetY;                                                           // смещение
-        private Vector3 _startPosition;                                                             // начальные координаты
+        private GameObject _self;                                                                   // РїРµСЂРµС‚Р°СЃРєРёРІР°РµРјС‹Р№ РѕР±СЉРµРєС‚
+        private GameObject _target;                                                                 // С†РµР»РµРІРѕР№ РѕР±СЉРµРєС‚
+        private SpellGenerator _spellGenerator;                                                     // в€љРµРЅРµСЂР°С‚РѕСЂ Р·Р°РєР»РёРЅР°РЅРёР№
+        private bool _canBeMerged;                                                                  // РјРѕР¶РЅРѕ СЃР»РёС‚СЊ
+        private float _offsetX, _offsetY;                                                           // СЃРјРµС‰РµРЅРёРµ
+        private Vector3 _startPosition;                                                             // РЅР°С‡Р°Р»СЊРЅС‹Рµ РєРѕРѕСЂРґРёРЅР°С‚С‹
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace Assets.Scripts
         }        
         
         /// <summary>
-        /// Метод обработки щелчка по левой клавише мыши
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё С‰РµР»С‡РєР° РїРѕ Р»РµРІРѕР№ РєР»Р°РІРёС€Рµ РјС‹С€Рё
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerClick(PointerEventData eventData)
@@ -36,7 +36,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод обработки длительного нажатия на левой кнопке мыши
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё РґР»РёС‚РµР»СЊРЅРѕРіРѕ РЅР°Р¶Р°С‚РёВ¤ РЅР° Р»РµРІРѕР№ РєРЅРѕРїРєРµ РјС‹С€Рё
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerDown(PointerEventData eventData)
@@ -47,7 +47,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод обработки перетаскивания
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё РїРµСЂРµС‚Р°СЃРєРёРІР°РЅРёВ¤
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnDrag(PointerEventData eventData)
@@ -58,7 +58,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод обработки отпускания левой кнопки
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё РѕС‚РїСѓСЃРєР°РЅРёВ¤ Р»РµРІРѕР№ РєРЅРѕРїРєРё
         /// </summary>
         /// <param name="eventData"></param>
         public override void OnPointerUp(PointerEventData eventData)
@@ -86,9 +86,9 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод обработки столкновений
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё СЃС‚РѕР»РєРЅРѕРІРµРЅРёР№
         /// </summary>
-        /// <param name="collision">целевой объект</param>
+        /// <param name="collision">С†РµР»РµРІРѕР№ РѕР±СЉРµРєС‚</param>
         public void OnTriggerStay2D(Collider2D collision)
         {
             if (!collision.CompareTag(tag) ||
@@ -99,21 +99,21 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод обработки слияния объектов
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё СЃР»РёВ¤РЅРёВ¤ РѕР±СЉРµРєС‚РѕРІ
         /// </summary>
         private void ClickMerge()
         {
-            if (!_spellGenerator.GetFirstSelected())                                                                 // если нет выделенных объектов
+            if (!_spellGenerator.GetFirstSelected())                                                                 // РµСЃР»Рё РЅРµС‚ РІС‹РґРµР»РµРЅРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
             {
                 _spellGenerator.Select(gameObject);
             }
-            else if (_spellGenerator.GetFirstSelected() && CompareTag("Selected"))                                   // если выбрали выделенный объект
+            else if (_spellGenerator.GetFirstSelected() && CompareTag("Selected"))                                   // РµСЃР»Рё РІС‹Р±СЂР°Р»Рё РІС‹РґРµР»РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚
             {
                 _spellGenerator.Deselect(gameObject);
             }
-            else if (_spellGenerator.GetFirstSelected() &&                                                           // если объект уже выделен
-                     CompareTag(_spellGenerator.GetFirstSelectedTag()) &&                                            // его тэг совпадает с текущим
-                     gameObject.GetComponent<SpellData>().Tier == _spellGenerator.GetFirstSelectedTier())            // его уровень совпадает с текущим
+            else if (_spellGenerator.GetFirstSelected() &&                                                           // РµСЃР»Рё РѕР±СЉРµРєС‚ СѓР¶Рµ РІС‹РґРµР»РµРЅ
+                     CompareTag(_spellGenerator.GetFirstSelectedTag()) &&                                            // РµРіРѕ С‚СЌРі СЃРѕРІРїР°РґР°РµС‚ СЃ С‚РµРєСѓС‰РёРј
+                     gameObject.GetComponent<SpellData>().Tier == _spellGenerator.GetFirstSelectedTier())            // РµРіРѕ СѓСЂРѕРІРµРЅСЊ СЃРѕРІРїР°РґР°РµС‚ СЃ С‚РµРєСѓС‰РёРј
             {
                 _spellGenerator.Merge(gameObject);
             }

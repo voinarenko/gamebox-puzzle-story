@@ -1,4 +1,4 @@
-using DG.Tweening;
+п»їusing DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,9 +6,9 @@ namespace Assets.Scripts
 {
     public class ChestController : MonoBehaviour, IPointerClickHandler
     {
-        // Управление сундуком
+        // вЂќРїСЂР°РІР»РµРЅРёРµ СЃСѓРЅРґСѓРєРѕРј
 
-        private SpellGenerator _spellGenerator;                                                    // Генератор заклинаний
+        private SpellGenerator _spellGenerator;                                                    // в€љРµРЅРµСЂР°С‚РѕСЂ Р·Р°РєР»РёРЅР°РЅРёР№
 
         /// <summary>
         /// Start is called before the first frame update
@@ -20,7 +20,7 @@ namespace Assets.Scripts
 
 
         /// <summary>
-        /// Метод обработки нажатия на левую клавишу мыши
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё РЅР°Р¶Р°С‚РёВ¤ РЅР° Р»РµРІСѓСЋ РєР»Р°РІРёС€Сѓ РјС‹С€Рё
         /// </summary>
         /// <param name="eventData"></param>
         public void OnPointerClick(PointerEventData eventData)
@@ -29,7 +29,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод обработки открытия сундука
+        /// С›РµС‚РѕРґ РѕР±СЂР°Р±РѕС‚РєРё РѕС‚РєСЂС‹С‚РёВ¤ СЃСѓРЅРґСѓРєР°
         /// </summary>
         private void ClickChest()
         {

@@ -1,20 +1,20 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 namespace Assets.Scripts.Stats
 {
     public abstract class Defense : MonoBehaviour
     {
-        // Защита
+        // Р—Р°С‰РёС‚Р°
 
-        [SerializeField] protected float MinDefense;             // минимальное значение защиты
-        [SerializeField] protected float MaxDefense = 100;       // максимальное значение защиты
-        [SerializeField] protected float CurrentDefense;         // текущее значение защиты
-        [SerializeField] protected float DefenseAmount;          // значение повышения защиты
+        [SerializeField] protected float MinDefense;             // РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹
+        [SerializeField] protected float MaxDefense = 100;       // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹
+        [SerializeField] protected float CurrentDefense;         // С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹
+        [SerializeField] protected float DefenseAmount;          // Р·РЅР°С‡РµРЅРёРµ РїРѕРІС‹С€РµРЅРёСЏ Р·Р°С‰РёС‚С‹
 
         /// <summary>
-        /// Метод повышения защиты
+        /// РњРµС‚РѕРґ РїРѕРІС‹С€РµРЅРёСЏ Р·Р°С‰РёС‚С‹
         /// </summary>
-        /// <param name="value">значение защиты</param>
+        /// <param name="value">Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹</param>
         public void SetDefense(float value)
         {
             CurrentDefense += value;
@@ -22,25 +22,25 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод, возвращающий текущее значение защиты
+        /// РњРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹
         /// </summary>
-        /// <returns>значение защиты</returns>
+        /// <returns>Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹</returns>
         public float GetDefense()
         {
             return CurrentDefense;
         }
 
         /// <summary>
-        /// Метод, возвращающий объём защиты
+        /// РњРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РѕР±СЉС‘Рј Р·Р°С‰РёС‚С‹
         /// </summary>
-        /// <returns>значение защиты</returns>
+        /// <returns>Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹</returns>
         public float GetDefenseAmount()
         {
             return DefenseAmount;
         }
 
         /// <summary>
-        /// Метод, сбрасывающий значение защиты
+        /// РњРµС‚РѕРґ, СЃР±СЂР°СЃС‹РІР°СЋС‰РёР№ Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹
         /// </summary>
         public void ResetDefense()
         {

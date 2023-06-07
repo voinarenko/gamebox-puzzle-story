@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts
@@ -6,10 +6,10 @@ namespace Assets.Scripts
     [RequireComponent(typeof(Toggle))]
     public class MuteToggle : MonoBehaviour
     {
-        // Выключатель звука
+        // Р’С‹РєР»СЋС‡Р°С‚РµР»СЊ Р·РІСѓРєР°
 
-        [SerializeField] private Sprite[] _images;      // массив изображений
-        private Toggle _toggle;                         // переключатель звука
+        [SerializeField] private Sprite[] _images;      // РјР°СЃСЃРёРІ РёР·РѕР±СЂР°Р¶РµРЅРёР№
+        private Toggle _toggle;                         // РїРµСЂРµРєР»СЋС‡Р°С‚РµР»СЊ Р·РІСѓРєР°
 
         /// <summary>
         /// Start is called before the first frame update
@@ -27,7 +27,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод включения/выключения звука
+        /// РњРµС‚РѕРґ РІРєР»СЋС‡РµРЅРёСЏ/РІС‹РєР»СЋС‡РµРЅРёСЏ Р·РІСѓРєР°
         /// </summary>
         /// <param name="audioIn"></param>
         public void ToggleAudioOnValueChange(bool audioIn)

@@ -1,17 +1,17 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 namespace Assets.Scripts.Stats
 {
     public class DamageDealer : MonoBehaviour
     {
-        // Нанесение урона
+        // РќР°РЅРµСЃРµРЅРёРµ СѓСЂРѕРЅР°
 
-        [SerializeField] private float _damage;        // Переменная количества урона
+        [SerializeField] private float _damage;        // РџРµСЂРµРјРµРЅРЅР°СЏ РєРѕР»РёС‡РµСЃС‚РІР° СѓСЂРѕРЅР°
 
         /// <summary>
-        /// Метод, возвращающий значение урона
+        /// РњРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ Р·РЅР°С‡РµРЅРёРµ СѓСЂРѕРЅР°
         /// </summary>
-        /// <returns>значение урона</returns>
+        /// <returns>Р·РЅР°С‡РµРЅРёРµ СѓСЂРѕРЅР°</returns>
         public float GetDamage()
         {
             return _damage;

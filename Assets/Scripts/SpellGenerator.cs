@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Stats;
 using DG.Tweening;
@@ -10,70 +10,70 @@ namespace Assets.Scripts
 {
     public class SpellGenerator : MonoBehaviour
     {
-        // Генератор заклинаний
+        // Р“РµРЅРµСЂР°С‚РѕСЂ Р·Р°РєР»РёРЅР°РЅРёР№
 
-        #region Объявление переменных
+        #region РћР±СЉСЏРІР»РµРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…
 
-        public bool IsAnimating;                                                    // состояние анимации для блокировки нажатий    
-        public bool IsMerging;                                                      // состояние слияния
+        public bool IsAnimating;                                                    // СЃРѕСЃС‚РѕСЏРЅРёРµ Р°РЅРёРјР°С†РёРё РґР»СЏ Р±Р»РѕРєРёСЂРѕРІРєРё РЅР°Р¶Р°С‚РёР№    
+        public bool IsMerging;                                                      // СЃРѕСЃС‚РѕСЏРЅРёРµ СЃР»РёСЏРЅРёСЏ
 
-        [SerializeField] private GameObject _player;                                // игрок
-        [SerializeField] private GameObject _eventSystem;                           // обработка событий
+        [SerializeField] private GameObject _player;                                // РёРіСЂРѕРє
+        [SerializeField] private GameObject _eventSystem;                           // РѕР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
 
-        private GameObject[] _nests = new GameObject[30];                           // Массив объектов с координатами
-        private static int _nestId;                                                 // Номер позиции в массиве
+        private GameObject[] _nests = new GameObject[30];                           // РњР°СЃСЃРёРІ РѕР±СЉРµРєС‚РѕРІ СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё
+        private static int _nestId;                                                 // РќРѕРјРµСЂ РїРѕР·РёС†РёРё РІ РјР°СЃСЃРёРІРµ
 
-        private bool _firstSelected;                                                // Наличие выделенного объекта
-        private string _firstSelectedTag;                                           // Тэг выделенного объекта
-        private int _firstSelectedTier;                                             // Уровень выделенного объекта
+        private bool _firstSelected;                                                // РќР°Р»РёС‡РёРµ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+        private string _firstSelectedTag;                                           // РўСЌРі РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+        private int _firstSelectedTier;                                             // РЈСЂРѕРІРµРЅСЊ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
 
-        [SerializeField] private int _enemyMove;                                    // ход врага
-        private int _moveCounter;                                                   // счётчик ходов
+        [SerializeField] private int _enemyMove;                                    // С…РѕРґ РІСЂР°РіР°
+        private int _moveCounter;                                                   // СЃС‡С‘С‚С‡РёРє С…РѕРґРѕРІ
 
-        #region Массивы заклинаний
+        #region РњР°СЃСЃРёРІС‹ Р·Р°РєР»РёРЅР°РЅРёР№
 
-        [SerializeField] private GameObject[] _spellsTier1 = new GameObject[3];    // Массив заклинаний 1-го уровня
-        [SerializeField] private GameObject[] _spellsTier2 = new GameObject[3];    // Массив заклинаний 2-го уровня
-        [SerializeField] private GameObject[] _spellsTier3 = new GameObject[3];    // Массив заклинаний 3-го уровня
-
-        #endregion
+        [SerializeField] private GameObject[] _spellsTier1 = new GameObject[3];    // РњР°СЃСЃРёРІ Р·Р°РєР»РёРЅР°РЅРёР№ 1-РіРѕ СѓСЂРѕРІРЅСЏ
+        [SerializeField] private GameObject[] _spellsTier2 = new GameObject[3];    // РњР°СЃСЃРёРІ Р·Р°РєР»РёРЅР°РЅРёР№ 2-РіРѕ СѓСЂРѕРІРЅСЏ
+        [SerializeField] private GameObject[] _spellsTier3 = new GameObject[3];    // РњР°СЃСЃРёРІ Р·Р°РєР»РёРЅР°РЅРёР№ 3-РіРѕ СѓСЂРѕРІРЅСЏ
 
         #endregion
 
-        #region Методы
+        #endregion
+
+        #region РњРµС‚РѕРґС‹
 
         /// <summary>
         /// Start is called before the first frame update
         /// </summary>
         private void Start()
         {
-            _nests = GameObject.FindGameObjectsWithTag("Nest");                     // Заполняем массив координат объектами
+            _nests = GameObject.FindGameObjectsWithTag("Nest");                     // Р—Р°РїРѕР»РЅСЏРµРј РјР°СЃСЃРёРІ РєРѕРѕСЂРґРёРЅР°С‚ РѕР±СЉРµРєС‚Р°РјРё
         }
 
-        #region Методы выдачи значений переменных
+        #region РњРµС‚РѕРґС‹ РІС‹РґР°С‡Рё Р·РЅР°С‡РµРЅРёР№ РїРµСЂРµРјРµРЅРЅС‹С…
 
         /// <summary>
-        /// Метод получения значения наличия выделенного объекта
+        /// РњРµС‚РѕРґ РїРѕР»СѓС‡РµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ РЅР°Р»РёС‡РёСЏ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <returns>наличие выделенного объекта</returns>
+        /// <returns>РЅР°Р»РёС‡РёРµ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°</returns>
         public bool GetFirstSelected()
         {
             return _firstSelected;
         }
 
         /// <summary>
-        /// Метод получения значения тэга выделенного объекта
+        /// РњРµС‚РѕРґ РїРѕР»СѓС‡РµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ С‚СЌРіР° РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <returns>значение тэга</returns>
+        /// <returns>Р·РЅР°С‡РµРЅРёРµ С‚СЌРіР°</returns>
         public string GetFirstSelectedTag()
         {
             return _firstSelectedTag;
         }
 
         /// <summary>
-        /// Метод получения значения уровня выделенного объекта
+        /// РњРµС‚РѕРґ РїРѕР»СѓС‡РµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ СѓСЂРѕРІРЅСЏ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <returns>значение уровня</returns>
+        /// <returns>Р·РЅР°С‡РµРЅРёРµ СѓСЂРѕРІРЅСЏ</returns>
         public int GetFirstSelectedTier()
         {
             return _firstSelectedTier;
@@ -81,12 +81,12 @@ namespace Assets.Scripts
 
         #endregion
 
-        #region Методы работы с полем
+        #region РњРµС‚РѕРґС‹ СЂР°Р±РѕС‚С‹ СЃ РїРѕР»РµРј
 
         /// <summary>
-        /// Метод поиска свободного места на поле
+        /// РњРµС‚РѕРґ РїРѕРёСЃРєР° СЃРІРѕР±РѕРґРЅРѕРіРѕ РјРµСЃС‚Р° РЅР° РїРѕР»Рµ
         /// </summary>
-        /// <returns>координаты свободного места</returns>
+        /// <returns>РєРѕРѕСЂРґРёРЅР°С‚С‹ СЃРІРѕР±РѕРґРЅРѕРіРѕ РјРµСЃС‚Р°</returns>
         private Vector3 FindSpawnPlace()
         {
             var placeIsFound = false;
@@ -109,18 +109,18 @@ namespace Assets.Scripts
         }
         
         /// <summary>
-        /// Метод, снимающий метку занятости после уничтожения объекта
+        /// РњРµС‚РѕРґ, СЃРЅРёРјР°СЋС‰РёР№ РјРµС‚РєСѓ Р·Р°РЅСЏС‚РѕСЃС‚Рё РїРѕСЃР»Рµ СѓРЅРёС‡С‚РѕР¶РµРЅРёСЏ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <param name="target">уничтоженный объект</param>
+        /// <param name="target">СѓРЅРёС‡С‚РѕР¶РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚</param>
         private void FreeNest(GameObject target)
         {
             _nests[target.GetComponent<SpellData>().NestId].GetComponent<OccupationStatusScript>().IsOccupied = false;
         }
 
         /// <summary>
-        /// Метод проверки заполненности поля
+        /// РњРµС‚РѕРґ РїСЂРѕРІРµСЂРєРё Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚Рё РїРѕР»СЏ
         /// </summary>
-        /// <returns>заполненность поля</returns>
+        /// <returns>Р·Р°РїРѕР»РЅРµРЅРЅРѕСЃС‚СЊ РїРѕР»СЏ</returns>
         private bool FieldIsFull()
         {
             var occupiedNests = _nests.Count(nest => nest.GetComponent<OccupationStatusScript>().IsOccupied);
@@ -128,17 +128,17 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод проверки занятости места
+        /// РњРµС‚РѕРґ РїСЂРѕРІРµСЂРєРё Р·Р°РЅСЏС‚РѕСЃС‚Рё РјРµСЃС‚Р°
         /// </summary>
-        /// <param name="nest">проверяемый объект</param>
-        /// <returns>занятость места</returns>
+        /// <param name="nest">РїСЂРѕРІРµСЂСЏРµРјС‹Р№ РѕР±СЉРµРєС‚</param>
+        /// <returns>Р·Р°РЅСЏС‚РѕСЃС‚СЊ РјРµСЃС‚Р°</returns>
         private static bool NestIsOccupied(GameObject nest)
         {
             return nest.GetComponent<OccupationStatusScript>().IsOccupied;
         }
 
         /// <summary>
-        /// Интерфейс заполнения поля заклинаниями
+        /// РРЅС‚РµСЂС„РµР№СЃ Р·Р°РїРѕР»РЅРµРЅРёСЏ РїРѕР»СЏ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё
         /// </summary>
         private IEnumerator FillTheField()
         {
@@ -152,7 +152,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод заполнения поля заклинаниями для доступа извне
+        /// РњРµС‚РѕРґ Р·Р°РїРѕР»РЅРµРЅРёСЏ РїРѕР»СЏ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё РґР»СЏ РґРѕСЃС‚СѓРїР° РёР·РІРЅРµ
         /// </summary>
         public void GenerateSpells()
         {
@@ -160,7 +160,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод, очищающий игровое поле
+        /// РњРµС‚РѕРґ, РѕС‡РёС‰Р°СЋС‰РёР№ РёРіСЂРѕРІРѕРµ РїРѕР»Рµ
         /// </summary>
         public static void ClearTheField()
         {
@@ -173,12 +173,12 @@ namespace Assets.Scripts
 
         #endregion
 
-        #region Методы работы с заклинаниями
+        #region РњРµС‚РѕРґС‹ СЂР°Р±РѕС‚С‹ СЃ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё
 
         /// <summary>
-        /// Метод выбора случайного заклинания в соответствии с его весом
+        /// РњРµС‚РѕРґ РІС‹Р±РѕСЂР° СЃР»СѓС‡Р°Р№РЅРѕРіРѕ Р·Р°РєР»РёРЅР°РЅРёСЏ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РµРіРѕ РІРµСЃРѕРј
         /// </summary>
-        /// <returns>случайный индекс</returns>
+        /// <returns>СЃР»СѓС‡Р°Р№РЅС‹Р№ РёРЅРґРµРєСЃ</returns>
         private int SelectRandomSpell()
         {
             var spellSelected = false;
@@ -187,10 +187,10 @@ namespace Assets.Scripts
             while (!spellSelected)
             {
                 var rnd = new Random();
-                var i = rnd.Next(100);      // случайное значение в диапазоне весов
+                var i = rnd.Next(100);      // СЃР»СѓС‡Р°Р№РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ РґРёР°РїР°Р·РѕРЅРµ РІРµСЃРѕРІ
                 for (var j = 0; j < _spellsTier1.Length; j++)
                 {
-                    // проверяем вхождение в диапазон весов заклинания
+                    // РїСЂРѕРІРµСЂСЏРµРј РІС…РѕР¶РґРµРЅРёРµ РІ РґРёР°РїР°Р·РѕРЅ РІРµСЃРѕРІ Р·Р°РєР»РёРЅР°РЅРёСЏ
                     if (i < _spellsTier1[j].GetComponent<SpellData>().MinProbabilityRange ||
                         i > _spellsTier1[j].GetComponent<SpellData>().MaxProbabilityRange) continue;
                     result = j;
@@ -202,11 +202,11 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод генерации заклинания
+        /// РњРµС‚РѕРґ РіРµРЅРµСЂР°С†РёРё Р·Р°РєР»РёРЅР°РЅРёСЏ
         /// </summary>
-        /// <param name="spell">вызываемый объект</param>
-        /// <param name="position">координаты</param>
-        /// <param name="place">позиция в массиве</param>
+        /// <param name="spell">РІС‹Р·С‹РІР°РµРјС‹Р№ РѕР±СЉРµРєС‚</param>
+        /// <param name="position">РєРѕРѕСЂРґРёРЅР°С‚С‹</param>
+        /// <param name="place">РїРѕР·РёС†РёСЏ РІ РјР°СЃСЃРёРІРµ</param>
         private void SpawnSpell(GameObject spell, Vector3 position, int place)
         {
             IsAnimating = true;
@@ -220,9 +220,9 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод определения типа заклинания по тэгу объекта
+        /// РњРµС‚РѕРґ РѕРїСЂРµРґРµР»РµРЅРёСЏ С‚РёРїР° Р·Р°РєР»РёРЅР°РЅРёСЏ РїРѕ С‚СЌРіСѓ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <returns>номер позиции в массиве</returns>
+        /// <returns>РЅРѕРјРµСЂ РїРѕР·РёС†РёРё РІ РјР°СЃСЃРёРІРµ</returns>
         private int FindSpell()
         {
             return _firstSelectedTag switch
@@ -235,10 +235,10 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод определения типа заклинания по тэгу объекта при перемещении
+        /// РњРµС‚РѕРґ РѕРїСЂРµРґРµР»РµРЅРёСЏ С‚РёРїР° Р·Р°РєР»РёРЅР°РЅРёСЏ РїРѕ С‚СЌРіСѓ РѕР±СЉРµРєС‚Р° РїСЂРё РїРµСЂРµРјРµС‰РµРЅРёРё
         /// </summary>
-        /// <param name="spellTag">тэг нового заклинания</param>
-        /// <returns>номер позиции в массиве</returns>
+        /// <param name="spellTag">С‚СЌРі РЅРѕРІРѕРіРѕ Р·Р°РєР»РёРЅР°РЅРёСЏ</param>
+        /// <returns>РЅРѕРјРµСЂ РїРѕР·РёС†РёРё РІ РјР°СЃСЃРёРІРµ</returns>
         private int FindSpell(string spellTag)
         {
             return spellTag switch
@@ -251,10 +251,10 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод создания заклинания выше уровнем, чем слитые
+        /// РњРµС‚РѕРґ СЃРѕР·РґР°РЅРёСЏ Р·Р°РєР»РёРЅР°РЅРёСЏ РІС‹С€Рµ СѓСЂРѕРІРЅРµРј, С‡РµРј СЃР»РёС‚С‹Рµ
         /// </summary>
-        /// <param name="position">координаты создания</param>
-        /// <param name="place">позиция в массиве</param>
+        /// <param name="position">РєРѕРѕСЂРґРёРЅР°С‚С‹ СЃРѕР·РґР°РЅРёСЏ</param>
+        /// <param name="place">РїРѕР·РёС†РёСЏ РІ РјР°СЃСЃРёРІРµ</param>
         public void NextTierSpell(Vector3 position, int place)
         {
             var spell = FindSpell();
@@ -276,11 +276,11 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод создания заклинания выше уровнем, чем слитые, при перемещении
+        /// РњРµС‚РѕРґ СЃРѕР·РґР°РЅРёСЏ Р·Р°РєР»РёРЅР°РЅРёСЏ РІС‹С€Рµ СѓСЂРѕРІРЅРµРј, С‡РµРј СЃР»РёС‚С‹Рµ, РїСЂРё РїРµСЂРµРјРµС‰РµРЅРёРё
         /// </summary>
-        /// <param name="position">координаты создания</param>
-        /// <param name="place">позиция в массиве</param>
-        /// <param name="spellTag">тэг нового заклинания</param>
+        /// <param name="position">РєРѕРѕСЂРґРёРЅР°С‚С‹ СЃРѕР·РґР°РЅРёСЏ</param>
+        /// <param name="place">РїРѕР·РёС†РёСЏ РІ РјР°СЃСЃРёРІРµ</param>
+        /// <param name="spellTag">С‚СЌРі РЅРѕРІРѕРіРѕ Р·Р°РєР»РёРЅР°РЅРёСЏ</param>
         public void NextTierSpell(Vector3 position, int place, string spellTag)
         {
             var spell = FindSpell(spellTag);
@@ -302,29 +302,29 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод, выполняющий действие, в зависимости от слитого заклинания
+        /// РњРµС‚РѕРґ, РІС‹РїРѕР»РЅСЏСЋС‰РёР№ РґРµР№СЃС‚РІРёРµ, РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃР»РёС‚РѕРіРѕ Р·Р°РєР»РёРЅР°РЅРёСЏ
         /// </summary>
         /// <param name="spell"></param>
         public void PerformAction(int spell)
         {
-            var player = GameObject.FindWithTag("Player");      // ищем игрока
-            var enemy = GameObject.FindWithTag("Enemy");        // ищем врага
+            var player = GameObject.FindWithTag("Player");      // РёС‰РµРј РёРіСЂРѕРєР°
+            var enemy = GameObject.FindWithTag("Enemy");        // РёС‰РµРј РІСЂР°РіР°
 
-            // ищем заклинание
+            // РёС‰РµРј Р·Р°РєР»РёРЅР°РЅРёРµ
             if (player == null) return;
             switch (spell)
             {
-                case 0: // атака
+                case 0: // Р°С‚Р°РєР°
                     if (enemy == null) return;
                     enemy.GetComponent<Health>()
                         .TakeDamage(player.GetComponent<DamageDealer>().GetDamage() * _firstSelectedTier);
 
                     break;
-                case 1: // здоровье
+                case 1: // Р·РґРѕСЂРѕРІСЊРµ
                     player.GetComponent<Health>()
                         .Heal(player.GetComponent<Health>().GetHealAmount() * _firstSelectedTier);
                     break;
-                case 2: // защита
+                case 2: // Р·Р°С‰РёС‚Р°
                     player.GetComponent<Defense>()
                         .SetDefense(player.GetComponent<Defense>().GetDefenseAmount() * _firstSelectedTier);
                     break;
@@ -332,27 +332,27 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод проверки состояний игрока и врагов
+        /// РњРµС‚РѕРґ РїСЂРѕРІРµСЂРєРё СЃРѕСЃС‚РѕСЏРЅРёР№ РёРіСЂРѕРєР° Рё РІСЂР°РіРѕРІ
         /// </summary>
         private void CheckStatus()
         {
-            var player = GameObject.FindWithTag("Player");      // ищем игрока
-            var enemy = GameObject.FindWithTag("Enemy");        // ищем врага
+            var player = GameObject.FindWithTag("Player");      // РёС‰РµРј РёРіСЂРѕРєР°
+            var enemy = GameObject.FindWithTag("Enemy");        // РёС‰РµРј РІСЂР°РіР°
 
-            // Если враг уничтожен, запускаем следующий эпизод
+            // Р•СЃР»Рё РІСЂР°Рі СѓРЅРёС‡С‚РѕР¶РµРЅ, Р·Р°РїСѓСЃРєР°РµРј СЃР»РµРґСѓСЋС‰РёР№ СЌРїРёР·РѕРґ
             if (enemy == null) { player.GetComponent<PlayerController>().SelectNextEpisode(); }
             else
             {
-                // Считаем ходы до атаки врага
+                // РЎС‡РёС‚Р°РµРј С…РѕРґС‹ РґРѕ Р°С‚Р°РєРё РІСЂР°РіР°
                 if (_moveCounter == _enemyMove)
                 {
-                    player.GetComponent<Health>().TakeDamage(enemy.GetComponent<DamageDealer>().GetDamage());   // наносим урон игроку
+                    player.GetComponent<Health>().TakeDamage(enemy.GetComponent<DamageDealer>().GetDamage());   // РЅР°РЅРѕСЃРёРј СѓСЂРѕРЅ РёРіСЂРѕРєСѓ
                     _moveCounter = 0;
 
-                    // Проверяем существование игрока
+                    // РџСЂРѕРІРµСЂСЏРµРј СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РёРіСЂРѕРєР°
                     player = GameObject.FindWithTag("Player");
 
-                    // Если игрок уничтожен, выводим экран поражения
+                    // Р•СЃР»Рё РёРіСЂРѕРє СѓРЅРёС‡С‚РѕР¶РµРЅ, РІС‹РІРѕРґРёРј СЌРєСЂР°РЅ РїРѕСЂР°Р¶РµРЅРёСЏ
                     if (player == null)
                     {
                         _player.GetComponent<Health>().ResetHealth();
@@ -361,7 +361,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    // Увеличиваем счётчик
+                    // РЈРІРµР»РёС‡РёРІР°РµРј СЃС‡С‘С‚С‡РёРє
                     _moveCounter++;
                 }
             }
@@ -369,50 +369,50 @@ namespace Assets.Scripts
 
         #endregion
 
-        #region Методы обработки дейчствий с заклинаниями
+        #region РњРµС‚РѕРґС‹ РѕР±СЂР°Р±РѕС‚РєРё РґРµР№С‡СЃС‚РІРёР№ СЃ Р·Р°РєР»РёРЅР°РЅРёСЏРјРё
 
         /// <summary>
-        /// Метод выделения объекта
+        /// РњРµС‚РѕРґ РІС‹РґРµР»РµРЅРёСЏ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <param name="target">объект</param>
+        /// <param name="target">РѕР±СЉРµРєС‚</param>
         public void Select(GameObject target)
         {
-            _firstSelectedTag =  target.tag;                                                    // присваиваем глобальной переменной тэг текущего объекта
-            _firstSelectedTier = target.GetComponent<SpellData>().Tier;                         // уровень текущего объекта
-            target.tag = "Selected";                                                            // меняем тэг текущего объекта
-            _firstSelected = true;                                                              // отмечаем наличие выделенного объекта
-            target.GetComponent<SpriteRenderer>().color = Color.yellow;                         // меняем цвет текущего объекта
+            _firstSelectedTag =  target.tag;                                                    // РїСЂРёСЃРІР°РёРІР°РµРј РіР»РѕР±Р°Р»СЊРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ С‚СЌРі С‚РµРєСѓС‰РµРіРѕ РѕР±СЉРµРєС‚Р°
+            _firstSelectedTier = target.GetComponent<SpellData>().Tier;                         // СѓСЂРѕРІРµРЅСЊ С‚РµРєСѓС‰РµРіРѕ РѕР±СЉРµРєС‚Р°
+            target.tag = "Selected";                                                            // РјРµРЅСЏРµРј С‚СЌРі С‚РµРєСѓС‰РµРіРѕ РѕР±СЉРµРєС‚Р°
+            _firstSelected = true;                                                              // РѕС‚РјРµС‡Р°РµРј РЅР°Р»РёС‡РёРµ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+            target.GetComponent<SpriteRenderer>().color = Color.yellow;                         // РјРµРЅСЏРµРј С†РІРµС‚ С‚РµРєСѓС‰РµРіРѕ РѕР±СЉРµРєС‚Р°
         }
 
         /// <summary>
-        /// Метод снятия выделения с объекта
+        /// РњРµС‚РѕРґ СЃРЅСЏС‚РёСЏ РІС‹РґРµР»РµРЅРёСЏ СЃ РѕР±СЉРµРєС‚Р°
         /// </summary>
-        /// <param name="target">объект</param>
+        /// <param name="target">РѕР±СЉРµРєС‚</param>
         public void Deselect(GameObject target)
         {
-            target.tag = _firstSelectedTag;                                                     // возвращаем тэг
-            _firstSelectedTag = null;                                                           // сбрасываем тэг выделенного объекта
-            _firstSelected = false;                                                             // удаляем наличие выделенного объекта
-            target.GetComponent<SpriteRenderer>().color = Color.white;                          // возвращаем обычный цвет
+            target.tag = _firstSelectedTag;                                                     // РІРѕР·РІСЂР°С‰Р°РµРј С‚СЌРі
+            _firstSelectedTag = null;                                                           // СЃР±СЂР°СЃС‹РІР°РµРј С‚СЌРі РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+            _firstSelected = false;                                                             // СѓРґР°Р»СЏРµРј РЅР°Р»РёС‡РёРµ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+            target.GetComponent<SpriteRenderer>().color = Color.white;                          // РІРѕР·РІСЂР°С‰Р°РµРј РѕР±С‹С‡РЅС‹Р№ С†РІРµС‚
         }
 
         /// <summary>
-        /// Метод слияния двух одинаковых объектов в один, уровнем выше
+        /// РњРµС‚РѕРґ СЃР»РёСЏРЅРёСЏ РґРІСѓС… РѕРґРёРЅР°РєРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ РІ РѕРґРёРЅ, СѓСЂРѕРІРЅРµРј РІС‹С€Рµ
         /// </summary>
-        /// <param name="target">целевой объект</param>
+        /// <param name="target">С†РµР»РµРІРѕР№ РѕР±СЉРµРєС‚</param>
         public void Merge(GameObject target)
         {
             IsAnimating = true;
-            var selected = GameObject.FindWithTag("Selected");                         // находим выделенный объект
-            Vector2 moveTo = target.transform.position;                                       // задаём координаты движения
-            selected.transform.DOMove(moveTo, 0.1f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
+            var selected = GameObject.FindWithTag("Selected");                         // РЅР°С…РѕРґРёРј РІС‹РґРµР»РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚
+            Vector2 moveTo = target.transform.position;                                       // Р·Р°РґР°С‘Рј РєРѕРѕСЂРґРёРЅР°С‚С‹ РґРІРёР¶РµРЅРёСЏ
+            selected.transform.DOMove(moveTo, 0.1f).OnComplete(() =>                  // Р·Р°РїСѓСЃРєР°РµРј Р°РЅРёРјР°С†РёСЋ РїРµСЂРµРјРµС‰РµРЅРёСЏ, РїРѕ Р·Р°РІРµСЂС€РµРЅРёСЋ:
             {
-                NextTierSpell(moveTo, target.GetComponent<SpellData>().NestId);               // создаём новый объект уровнем выше вместо текущего
-                FreeNest(selected);                                                             // освобождаем место на поле
-                Destroy(selected);                                                              // уничтожаем первый объект
-                Destroy(target);                                                                // и текущий
-                _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
-                _firstSelected = false;                                                         // и наличие выделенного объекта
+                NextTierSpell(moveTo, target.GetComponent<SpellData>().NestId);               // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ СѓСЂРѕРІРЅРµРј РІС‹С€Рµ РІРјРµСЃС‚Рѕ С‚РµРєСѓС‰РµРіРѕ
+                FreeNest(selected);                                                             // РѕСЃРІРѕР±РѕР¶РґР°РµРј РјРµСЃС‚Рѕ РЅР° РїРѕР»Рµ
+                Destroy(selected);                                                              // СѓРЅРёС‡С‚РѕР¶Р°РµРј РїРµСЂРІС‹Р№ РѕР±СЉРµРєС‚
+                Destroy(target);                                                                // Рё С‚РµРєСѓС‰РёР№
+                _firstSelectedTag = null;                                                       // СЃР±СЂР°СЃС‹РІР°РµРј С‚СЌРі РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+                _firstSelected = false;                                                         // Рё РЅР°Р»РёС‡РёРµ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
                 CheckStatus();
                 IsMerging = false;
                 IsAnimating = false;
@@ -421,10 +421,10 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод слияния двух одинаковых объектов в один, уровнем выше, при перетягивании
+        /// РњРµС‚РѕРґ СЃР»РёСЏРЅРёСЏ РґРІСѓС… РѕРґРёРЅР°РєРѕРІС‹С… РѕР±СЉРµРєС‚РѕРІ РІ РѕРґРёРЅ, СѓСЂРѕРІРЅРµРј РІС‹С€Рµ, РїСЂРё РїРµСЂРµС‚СЏРіРёРІР°РЅРёРё
         /// </summary>
-        /// <param name="self">перетягиваемый объект</param>
-        /// <param name="target">целевой объект</param>
+        /// <param name="self">РїРµСЂРµС‚СЏРіРёРІР°РµРјС‹Р№ РѕР±СЉРµРєС‚</param>
+        /// <param name="target">С†РµР»РµРІРѕР№ РѕР±СЉРµРєС‚</param>
         public void Merge(GameObject self, GameObject target)
         {
             var position = target.transform.position;
@@ -433,14 +433,14 @@ namespace Assets.Scripts
             IsAnimating = true;
             self.transform.DOScale(Vector3.zero, 0.1f).OnComplete(() =>
             {
-                FreeNest(self);                                                                 // освобождаем место на поле
-                Destroy(self);                                                                  // уничтожаем первый объект
+                FreeNest(self);                                                                 // РѕСЃРІРѕР±РѕР¶РґР°РµРј РјРµСЃС‚Рѕ РЅР° РїРѕР»Рµ
+                Destroy(self);                                                                  // СѓРЅРёС‡С‚РѕР¶Р°РµРј РїРµСЂРІС‹Р№ РѕР±СЉРµРєС‚
                 target.transform.DOScale(Vector3.zero, 0.1f).OnComplete(() =>
                 {
-                    Destroy(target);                                                            // уничтожаем цель
-                    NextTierSpell(position, nest, spellTag);                                    // создаём новый объект уровнем выше вместо текущего
-                    _firstSelectedTag = null;                                                       // сбрасываем тэг выделенного объекта
-                    _firstSelected = false;                                                         // и наличие выделенного объекта
+                    Destroy(target);                                                            // СѓРЅРёС‡С‚РѕР¶Р°РµРј С†РµР»СЊ
+                    NextTierSpell(position, nest, spellTag);                                    // СЃРѕР·РґР°С‘Рј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚ СѓСЂРѕРІРЅРµРј РІС‹С€Рµ РІРјРµСЃС‚Рѕ С‚РµРєСѓС‰РµРіРѕ
+                    _firstSelectedTag = null;                                                       // СЃР±СЂР°СЃС‹РІР°РµРј С‚СЌРі РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
+                    _firstSelected = false;                                                         // Рё РЅР°Р»РёС‡РёРµ РІС‹РґРµР»РµРЅРЅРѕРіРѕ РѕР±СЉРµРєС‚Р°
                     CheckStatus();
                     IsAnimating = false;
                 });
@@ -449,7 +449,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод отключения всех коллайдеров на поле
+        /// РњРµС‚РѕРґ РѕС‚РєР»СЋС‡РµРЅРёСЏ РІСЃРµС… РєРѕР»Р»Р°Р№РґРµСЂРѕРІ РЅР° РїРѕР»Рµ
         /// </summary>
         public void TurnCollidersOff()
         {
@@ -461,7 +461,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод включения всех коллайдеров на поле
+        /// РњРµС‚РѕРґ РІРєР»СЋС‡РµРЅРёСЏ РІСЃРµС… РєРѕР»Р»Р°Р№РґРµСЂРѕРІ РЅР° РїРѕР»Рµ
         /// </summary>
         public void TurnCollidersOn()
         {
@@ -473,9 +473,9 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод поиска всех заклинаний на поле
+        /// РњРµС‚РѕРґ РїРѕРёСЃРєР° РІСЃРµС… Р·Р°РєР»РёРЅР°РЅРёР№ РЅР° РїРѕР»Рµ
         /// </summary>
-        /// <returns>список заклинаний</returns>
+        /// <returns>СЃРїРёСЃРѕРє Р·Р°РєР»РёРЅР°РЅРёР№</returns>
         private IEnumerable<SpellData> GetAllSpells()
         {
             return FindObjectsOfType<SpellData>();

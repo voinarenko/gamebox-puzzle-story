@@ -1,40 +1,40 @@
-using Assets.Scripts.Stats;
+п»їusing Assets.Scripts.Stats;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        // Управление игровыми экранами
+        // вЂќРїСЂР°РІР»РµРЅРёРµ РёРіСЂРѕРІС‹РјРё СЌРєСЂР°РЅР°РјРё
 
-        #region Переменные
+        #region С•РµСЂРµРјРµРЅРЅС‹Рµ
 
-        #region Данные для сброса при перезапуске
+        #region Ж’Р°РЅРЅС‹Рµ РґР»В¤ СЃР±СЂРѕСЃР° РїСЂРё РїРµСЂРµР·Р°РїСѓСЃРєРµ
 
-        [SerializeField] private GameObject _spellGenerator;                        // Генератор заклинаний
-        [SerializeField] private GameObject _player;                                // Игрок
-        [SerializeField] private GameObject[] _checkpoints;                         // Массив контрольных точек
-        [SerializeField] private GameObject[] _enemies;                             // Массив врагов
-
-        #endregion
-
-        #region Экраны
-
-        private GameObject _screen;                                     // текущий экран
-        private GameObject _level;                                      // текущий уровень
-        [SerializeField] private GameObject _mainMenuScreen;            // Начальный экран
-        [SerializeField] private GameObject _levelSelectScreen;         // Экран настроек
-        [SerializeField] private GameObject _gameLevelScreen;           // Экран выхода из игры
-        [SerializeField] private GameObject _defeatedMenuScreen;        // Экран выхода из игры
+        [SerializeField] private GameObject _spellGenerator;                        // в€љРµРЅРµСЂР°С‚РѕСЂ Р·Р°РєР»РёРЅР°РЅРёР№
+        [SerializeField] private GameObject _player;                                // В»РіСЂРѕРє
+        [SerializeField] private GameObject[] _checkpoints;                         // С›Р°СЃСЃРёРІ РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… С‚РѕС‡РµРє
+        [SerializeField] private GameObject[] _enemies;                             // С›Р°СЃСЃРёРІ РІСЂР°РіРѕРІ
 
         #endregion
 
+        #region РЃРєСЂР°РЅС‹
+
+        private GameObject _screen;                                     // С‚РµРєСѓС‰РёР№ СЌРєСЂР°РЅ
+        private GameObject _level;                                      // С‚РµРєСѓС‰РёР№ СѓСЂРѕРІРµРЅСЊ
+        [SerializeField] private GameObject _mainMenuScreen;            // РЊР°С‡Р°Р»СЊРЅС‹Р№ СЌРєСЂР°РЅ
+        [SerializeField] private GameObject _levelSelectScreen;         // РЃРєСЂР°РЅ РЅР°СЃС‚СЂРѕРµРє
+        [SerializeField] private GameObject _gameLevelScreen;           // РЃРєСЂР°РЅ РІС‹С…РѕРґР° РёР· РёРіСЂС‹
+        [SerializeField] private GameObject _defeatedMenuScreen;        // РЃРєСЂР°РЅ РІС‹С…РѕРґР° РёР· РёРіСЂС‹
+
         #endregion
 
-        #region Методы управления экранами
+        #endregion
+
+        #region С›РµС‚РѕРґС‹ СѓРїСЂР°РІР»РµРЅРёВ¤ СЌРєСЂР°РЅР°РјРё
 
         /// <summary>
-        /// Метод вызова экрана главного меню
+        /// С›РµС‚РѕРґ РІС‹Р·РѕРІР° СЌРєСЂР°РЅР° РіР»Р°РІРЅРѕРіРѕ РјРµРЅСЋ
         /// </summary>
         public void MainMenu()
         {
@@ -45,7 +45,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод вызова экрана выбора уровня
+        /// С›РµС‚РѕРґ РІС‹Р·РѕРІР° СЌРєСЂР°РЅР° РІС‹Р±РѕСЂР° СѓСЂРѕРІРЅВ¤
         /// </summary>
         public void LevelSelect()
         {
@@ -56,7 +56,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод вызова экрана игрового уровня
+        /// С›РµС‚РѕРґ РІС‹Р·РѕРІР° СЌРєСЂР°РЅР° РёРіСЂРѕРІРѕРіРѕ СѓСЂРѕРІРЅВ¤
         /// </summary>
         public void GameLevel()
         {
@@ -69,7 +69,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод вызова перезапуска игрового уровня
+        /// С›РµС‚РѕРґ РІС‹Р·РѕРІР° РїРµСЂРµР·Р°РїСѓСЃРєР° РёРіСЂРѕРІРѕРіРѕ СѓСЂРѕРІРЅВ¤
         /// </summary>
         public void RestartLevel()
         {
@@ -81,7 +81,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод вызова экрана поражения
+        /// С›РµС‚РѕРґ РІС‹Р·РѕРІР° СЌРєСЂР°РЅР° РїРѕСЂР°Р¶РµРЅРёВ¤
         /// </summary>
         public void DefeatedMenu()
         {
@@ -94,7 +94,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод выхода из игрового уровня
+        /// С›РµС‚РѕРґ РІС‹С…РѕРґР° РёР· РёРіСЂРѕРІРѕРіРѕ СѓСЂРѕРІРЅВ¤
         /// </summary>
         public void CloseWindow()
         {
@@ -104,32 +104,32 @@ namespace Assets.Scripts
         #endregion
 
         /// <summary>
-        /// Метод сброса настроек
+        /// С›РµС‚РѕРґ СЃР±СЂРѕСЃР° РЅР°СЃС‚СЂРѕРµРє
         /// </summary>
         private void ResetData()
         {
-            // Сбрасываем здоровье игрока
+            // вЂ”Р±СЂР°СЃС‹РІР°РµРј Р·РґРѕСЂРѕРІСЊРµ РёРіСЂРѕРєР°
             _player.GetComponent<Health>().ResetHealth();
-            // Сбрасываем защиту игрока
+            // вЂ”Р±СЂР°СЃС‹РІР°РµРј Р·Р°С‰РёС‚Сѓ РёРіСЂРѕРєР°
             _player.GetComponent<Defense>().ResetDefense();
-            // Сбрасываем позицию игрока
+            // вЂ”Р±СЂР°СЃС‹РІР°РµРј РїРѕР·РёС†РёСЋ РёРіСЂРѕРєР°
             _player.GetComponent<PlayerController>().PlayerPositionReset();
 
-            // Сбрасываем контрольные точки
+            // вЂ”Р±СЂР°СЃС‹РІР°РµРј РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ С‚РѕС‡РєРё
             foreach (var c in _checkpoints)
             {
                 c.SetActive(false);
             }
             _checkpoints[0].SetActive(true);
 
-            // Сбрасываем врагов
+            // вЂ”Р±СЂР°СЃС‹РІР°РµРј РІСЂР°РіРѕРІ
             foreach (var e in _enemies)
             {
                 e.SetActive(false);
                 e.GetComponent<Health>().ResetHealth();
             }
 
-            // Уничтожаем сундуки
+            // вЂќРЅРёС‡С‚РѕР¶Р°РµРј СЃСѓРЅРґСѓРєРё
             var chests = GameObject.FindGameObjectsWithTag("Chest");
             foreach (var c in chests)
             {

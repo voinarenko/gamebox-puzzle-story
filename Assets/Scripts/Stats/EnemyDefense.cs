@@ -1,7 +1,7 @@
-namespace Assets.Scripts.Stats
+п»їnamespace Assets.Scripts.Stats
 {
     public class EnemyDefense : Defense
     {
-        // Защита врага
+        // Р—Р°С‰РёС‚Р° РІСЂР°РіР°
     }
 }

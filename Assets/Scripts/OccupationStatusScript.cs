@@ -1,10 +1,10 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 namespace Assets.Scripts
 {
     public class OccupationStatusScript : MonoBehaviour
     {
-        // Состояние занятости места на игровом поле
+        // СЃРѕСЃС‚РѕВ¤РЅРёРµ Р·Р°РЅВ¤С‚РѕСЃС‚Рё РјРµСЃС‚Р° РЅР° РёРіСЂРѕРІРѕРј РїРѕР»Рµ
         public bool IsOccupied = false;
     }
 }

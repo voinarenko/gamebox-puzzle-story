@@ -1,4 +1,4 @@
-using DG.Tweening;
+п»їusing DG.Tweening;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -7,21 +7,21 @@ namespace Assets.Scripts
 {
     public class PlayerController : MonoBehaviour
     {
-        // Управление игровым процессом в зоне Side
+        // вЂќРїСЂР°РІР»РµРЅРёРµ РёРіСЂРѕРІС‹Рј РїСЂРѕС†РµСЃСЃРѕРј РІ Р·РѕРЅРµ Side
 
-        #region Переменные
+        #region С•РµСЂРµРјРµРЅРЅС‹Рµ
 
-        [SerializeField] private SpellGenerator _spellGenerator;    // генератор заклинаний
+        [SerializeField] private SpellGenerator _spellGenerator;    // РіРµРЅРµСЂР°С‚РѕСЂ Р·Р°РєР»РёРЅР°РЅРёР№
 
-        [SerializeField] private GameObject _eventSystem;           // обработка событий
-        [SerializeField] private GameObject[] _enemies;             // массив врагов
-        [SerializeField] private GameObject[] _checkpoints;         // массив контрольных точек
-        [SerializeField] private GameObject[] _chests;              // массив сундуков
+        [SerializeField] private GameObject _eventSystem;           // РѕР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
+        [SerializeField] private GameObject[] _enemies;             // РјР°СЃСЃРёРІ РІСЂР°РіРѕРІ
+        [SerializeField] private GameObject[] _checkpoints;         // РјР°СЃСЃРёРІ РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… С‚РѕС‡РµРє
+        [SerializeField] private GameObject[] _chests;              // РјР°СЃСЃРёРІ СЃСѓРЅРґСѓРєРѕРІ
 
-        public int CurrentEpisode = 1;                              // текущий эпизод
-        private static int _episode;                                // переменная для переключателя эпизодов
+        public int CurrentEpisode = 1;                              // С‚РµРєСѓС‰РёР№ СЌРїРёР·РѕРґ
+        private static int _episode;                                // РїРµСЂРµРјРµРЅРЅР°В¤ РґР»В¤ РїРµСЂРµРєР»СЋС‡Р°С‚РµР»В¤ СЌРїРёР·РѕРґРѕРІ
 
-        private Vector3 _startPosition;                             // начальное положение игрока
+        private Vector3 _startPosition;                             // РЅР°С‡Р°Р»СЊРЅРѕРµ РїРѕР»РѕР¶РµРЅРёРµ РёРіСЂРѕРєР°
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод запуска игрового сценария
+        /// С›РµС‚РѕРґ Р·Р°РїСѓСЃРєР° РёРіСЂРѕРІРѕРіРѕ СЃС†РµРЅР°СЂРёВ¤
         /// </summary>
         public static void StartGame()
         {
@@ -42,7 +42,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод, меняющий текущий эпизод
+        /// С›РµС‚РѕРґ, РјРµРЅВ¤СЋС‰РёР№ С‚РµРєСѓС‰РёР№ СЌРїРёР·РѕРґ
         /// </summary>
         public void SelectNextEpisode()
         {
@@ -57,34 +57,34 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод выбора эпизода
+        /// С›РµС‚РѕРґ РІС‹Р±РѕСЂР° СЌРїРёР·РѕРґР°
         /// </summary>
-        /// <param name="episode">номер эпизода</param>
+        /// <param name="episode">РЅРѕРјРµСЂ СЌРїРёР·РѕРґР°</param>
         private void EpisodeSelector(int episode)
         {
             switch (episode)
             {
                 case 1:
-                    PlayerStoryMovement(0, 1, 0);       // Эпизод 1
+                    PlayerStoryMovement(0, 1, 0);       // РЃРїРёР·РѕРґ 1
                     break;
                 case 2:
-                    PlayerStoryMovement(1, 2, 0);       // Эпизод 2
+                    PlayerStoryMovement(1, 2, 0);       // РЃРїРёР·РѕРґ 2
                     break;
                 case 3:
-                    PlayerStoryMovement(2, 3, 1);       // Эпизод 3
+                    PlayerStoryMovement(2, 3, 1);       // РЃРїРёР·РѕРґ 3
                     break;
                 case 4:
-                    PlayerStoryMovement(3, 0, 2);       // Эпизод 4
+                    PlayerStoryMovement(3, 0, 2);       // РЃРїРёР·РѕРґ 4
                     break;
             }
         }
 
         /// <summary>
-        /// Метод, вызывающий процессы между сражениями
+        /// С›РµС‚РѕРґ, РІС‹Р·С‹РІР°СЋС‰РёР№ РїСЂРѕС†РµСЃСЃС‹ РјРµР¶РґСѓ СЃСЂР°Р¶РµРЅРёВ¤РјРё
         /// </summary>
-        /// <param name="enemy">позиция врага</param>
-        /// <param name="checkpoint">позиция контрольной точки</param>
-        /// <param name="chest">позиция сундука</param>
+        /// <param name="enemy">РїРѕР·РёС†РёВ¤ РІСЂР°РіР°</param>
+        /// <param name="checkpoint">РїРѕР·РёС†РёВ¤ РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ С‚РѕС‡РєРё</param>
+        /// <param name="chest">РїРѕР·РёС†РёВ¤ СЃСѓРЅРґСѓРєР°</param>
         private void PlayerStoryMovement(int enemy, int checkpoint, int chest)
         {
             _spellGenerator.IsAnimating = true;
@@ -100,9 +100,9 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод, вызывающий сундук
+        /// С›РµС‚РѕРґ, РІС‹Р·С‹РІР°СЋС‰РёР№ СЃСѓРЅРґСѓРє
         /// </summary>
-        /// <param name="value">позиция сундука</param>
+        /// <param name="value">РїРѕР·РёС†РёВ¤ СЃСѓРЅРґСѓРєР°</param>
         private void GenerateChest(int value)
         {
             _spellGenerator.IsAnimating = true;
@@ -115,7 +115,7 @@ namespace Assets.Scripts
         }
         
         /// <summary>
-        /// Метод сброса позиции игрока
+        /// С›РµС‚РѕРґ СЃР±СЂРѕСЃР° РїРѕР·РёС†РёРё РёРіСЂРѕРєР°
         /// </summary>
         public void PlayerPositionReset()
         {

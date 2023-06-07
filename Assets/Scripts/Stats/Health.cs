@@ -1,25 +1,25 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 namespace Assets.Scripts.Stats
 {
     public abstract class Health : MonoBehaviour
     {
-        // Здоровье
+        // В«РґРѕСЂРѕРІСЊРµ
 
-        #region Переменные
+        #region С•РµСЂРµРјРµРЅРЅС‹Рµ
 
-        [SerializeField] protected float MaxHealth;             // Максимальное здоровье
-        [SerializeField] protected float CurrentHealth;         // Текущее здоровье
-        [SerializeField] protected float HealAmount;            // Входящее лечение
-        [SerializeField] protected bool IsAlive;                // Объект жив
+        [SerializeField] protected float MaxHealth;             // С›Р°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РґРѕСЂРѕРІСЊРµ
+        [SerializeField] protected float CurrentHealth;         // вЂњРµРєСѓС‰РµРµ Р·РґРѕСЂРѕРІСЊРµ
+        [SerializeField] protected float HealAmount;            // В¬С…РѕРґВ¤С‰РµРµ Р»РµС‡РµРЅРёРµ
+        [SerializeField] protected bool IsAlive;                // СњР±СЉРµРєС‚ Р¶РёРІ
 
         #endregion
 
 
         /// <summary>
-        /// Метод получения урона
+        /// С›РµС‚РѕРґ РїРѕР»СѓС‡РµРЅРёВ¤ СѓСЂРѕРЅР°
         /// </summary>
-        /// <param name="damage">количество урона</param>
+        /// <param name="damage">РєРѕР»РёС‡РµСЃС‚РІРѕ СѓСЂРѕРЅР°</param>
         public void TakeDamage(float damage)
         {
             CurrentHealth -= damage * ((100 - GetComponent<Defense>().GetDefense()) / 100);                        
@@ -31,9 +31,9 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод лечения
+        /// С›РµС‚РѕРґ Р»РµС‡РµРЅРёВ¤
         /// </summary>
-        /// <param name="healing">количество здоровья</param>
+        /// <param name="healing">РєРѕР»РёС‡РµСЃС‚РІРѕ Р·РґРѕСЂРѕРІСЊВ¤</param>
         public void Heal(float healing)
         {
             CurrentHealth += healing;
@@ -41,16 +41,16 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод, возвращающий объём лечения
+        /// С›РµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РѕР±СЉР„Рј Р»РµС‡РµРЅРёВ¤
         /// </summary>
-        /// <returns>объём лечения</returns>
+        /// <returns>РѕР±СЉР„Рј Р»РµС‡РµРЅРёВ¤</returns>
         public float GetHealAmount()
         {
             return HealAmount;
         }
 
         /// <summary>
-        /// Метод проверки текущего здоровья — не должно опускаться ниже 0
+        /// С›РµС‚РѕРґ РїСЂРѕРІРµСЂРєРё С‚РµРєСѓС‰РµРіРѕ Р·РґРѕСЂРѕРІСЊВ¤ Р§ РЅРµ РґРѕР»Р¶РЅРѕ РѕРїСѓСЃРєР°С‚СЊСЃВ¤ РЅРёР¶Рµ 0
         /// </summary>
         private void CheckMinHealth()
         {
@@ -58,9 +58,9 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод проверки текущего здоровья — не должно превышать максимальное
+        /// С›РµС‚РѕРґ РїСЂРѕРІРµСЂРєРё С‚РµРєСѓС‰РµРіРѕ Р·РґРѕСЂРѕРІСЊВ¤ Р§ РЅРµ РґРѕР»Р¶РЅРѕ РїСЂРµРІС‹С€Р°С‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ
         /// </summary>
-        /// <returns>текущее здоровье</returns>
+        /// <returns>С‚РµРєСѓС‰РµРµ Р·РґРѕСЂРѕРІСЊРµ</returns>
         private float CheckMaxHealth()
         {
             if (CurrentHealth >= MaxHealth) CurrentHealth = MaxHealth;
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод установки текущего здоровья на 0
+        /// С›РµС‚РѕРґ СѓСЃС‚Р°РЅРѕРІРєРё С‚РµРєСѓС‰РµРіРѕ Р·РґРѕСЂРѕРІСЊВ¤ РЅР° 0
         /// </summary>
         private void SetCurrentHealthToZero()
         {
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод проверки, жив ли игрок
+        /// С›РµС‚РѕРґ РїСЂРѕРІРµСЂРєРё, Р¶РёРІ Р»Рё РёРіСЂРѕРє
         /// </summary>
         private void CheckIsAlive()
         {
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Stats
         }
 
         /// <summary>
-        /// Метод сброса здоровья
+        /// С›РµС‚РѕРґ СЃР±СЂРѕСЃР° Р·РґРѕСЂРѕРІСЊВ¤
         /// </summary>
         public void ResetHealth()
         {

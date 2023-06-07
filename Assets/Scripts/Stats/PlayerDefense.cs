@@ -1,4 +1,4 @@
-using System.Globalization;
+п»їusing System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -6,19 +6,19 @@ namespace Assets.Scripts.Stats
 {
     public class PlayerDefense : Defense
     {
-        // Защита игрока
+        // В«Р°С‰РёС‚Р° РёРіСЂРѕРєР°
 
-        [SerializeField] private TMP_Text _defenseText;     // отображение защиты на экране
-        [SerializeField] private GameObject[] _images;      // массив изображений игрока
+        [SerializeField] private TMP_Text _defenseText;     // РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ Р·Р°С‰РёС‚С‹ РЅР° СЌРєСЂР°РЅРµ
+        [SerializeField] private GameObject[] _images;      // РјР°СЃСЃРёРІ РёР·РѕР±СЂР°Р¶РµРЅРёР№ РёРіСЂРѕРєР°
 
         /// <summary>
         /// Update is called once per frame
         /// </summary>
         private void Update()
         {
-            _defenseText.text = CurrentDefense.ToString(CultureInfo.InvariantCulture);  // выводим значение защиты на экран
+            _defenseText.text = CurrentDefense.ToString(CultureInfo.InvariantCulture);  // РІС‹РІРѕРґРёРј Р·РЅР°С‡РµРЅРёРµ Р·Р°С‰РёС‚С‹ РЅР° СЌРєСЂР°РЅ
 
-            // меняем изображение игрока, в зависимости от значения защиты
+            // РјРµРЅВ¤РµРј РёР·РѕР±СЂР°Р¶РµРЅРёРµ РёРіСЂРѕРєР°, РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ Р·РЅР°С‡РµРЅРёВ¤ Р·Р°С‰РёС‚С‹
             switch (CurrentDefense)
             {
                 case >= 0 and <= 30:

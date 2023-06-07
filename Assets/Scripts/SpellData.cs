@@ -1,14 +1,14 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 namespace Assets.Scripts
 {
     public class SpellData : MonoBehaviour
     {
-        // Параметры заклинания
+        // РџР°СЂР°РјРµС‚СЂС‹ Р·Р°РєР»РёРЅР°РЅРёСЏ
             
-        public int Tier;                    // уровень
-        public int NestId;                  // номер позиции на поле
-        public int MinProbabilityRange;     // минимальное значение диапазона вероятности
-        public int MaxProbabilityRange;     // максимальное значение диапазона вероятности
+        public int Tier;                    // СѓСЂРѕРІРµРЅСЊ
+        public int NestId;                  // РЅРѕРјРµСЂ РїРѕР·РёС†РёРё РЅР° РїРѕР»Рµ
+        public int MinProbabilityRange;     // РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР° РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё
+        public int MaxProbabilityRange;     // РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРёР°РїР°Р·РѕРЅР° РІРµСЂРѕСЏС‚РЅРѕСЃС‚Рё
     }
 }
