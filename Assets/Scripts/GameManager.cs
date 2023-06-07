@@ -11,6 +11,7 @@ namespace Assets.Scripts
 
         #region Данные для сброса при перезапуске
 
+        [SerializeField] private GameObject _spellGenerator;                        // Генератор заклинаний
         [SerializeField] private GameObject _player;                                // Игрок
         [SerializeField] private GameObject[] _checkpoints;                         // Массив контрольных точек
         [SerializeField] private GameObject[] _enemies;                             // Массив врагов
@@ -92,6 +93,14 @@ namespace Assets.Scripts
             _screen = _defeatedMenuScreen;
         }
 
+        /// <summary>
+        /// Метод выхода из игрового уровня
+        /// </summary>
+        public void CloseWindow()
+        {
+            if (!_spellGenerator.GetComponent<SpellGenerator>().IsAnimating) { DefeatedMenu(); }
+        }
+
         #endregion
 
         /// <summary>
@@ -118,6 +127,13 @@ namespace Assets.Scripts
             {
                 e.SetActive(false);
                 e.GetComponent<Health>().ResetHealth();
+            }
+
+            // Уничтожаем сундуки
+            var chests = GameObject.FindGameObjectsWithTag("Chest");
+            foreach (var c in chests)
+            {
+                Destroy(c);
             }
         }
 
