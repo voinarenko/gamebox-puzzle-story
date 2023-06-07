@@ -8,13 +8,11 @@ namespace Assets.Scripts.Stats
     {
         // Здоровье врага
 
-        #region Переменные
+        [SerializeField] private TMP_Text _healthText;      // здоровье на экране
 
-        [SerializeField] private TMP_Text _healthText;
-
-        #endregion
-
-        // Инициализация
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             CurrentHealth = MaxHealth;  // Текущее здоровье

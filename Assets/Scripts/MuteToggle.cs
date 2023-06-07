@@ -9,7 +9,7 @@ namespace Assets.Scripts
         // Выключатель звука
 
         [SerializeField] private Sprite[] _images;      // массив изображений
-        private Toggle _toggle;
+        private Toggle _toggle;                         // переключатель звука
 
         /// <summary>
         /// Start is called before the first frame update
@@ -27,7 +27,7 @@ namespace Assets.Scripts
         }
 
         /// <summary>
-        /// Метод выключения звука
+        /// Метод включения/выключения звука
         /// </summary>
         /// <param name="audioIn"></param>
         public void ToggleAudioOnValueChange(bool audioIn)

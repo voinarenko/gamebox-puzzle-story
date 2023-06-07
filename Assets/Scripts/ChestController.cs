@@ -6,6 +6,8 @@ namespace Assets.Scripts
 {
     public class ChestController : MonoBehaviour, IPointerClickHandler
     {
+        // Управление сундуком
+
         private SpellGenerator _spellGenerator;                                                    // Генератор заклинаний
 
         /// <summary>

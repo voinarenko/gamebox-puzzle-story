@@ -47,7 +47,7 @@ namespace Assets.Scripts
         /// </summary>
         private void Start()
         {
-            _nests = GameObject.FindGameObjectsWithTag("Nest");                     // Заполняем массив объектами
+            _nests = GameObject.FindGameObjectsWithTag("Nest");                     // Заполняем массив координат объектами
         }
 
         #region Методы выдачи значений переменных

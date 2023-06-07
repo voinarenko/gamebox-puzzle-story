@@ -4,9 +4,11 @@ namespace Assets.Scripts
 {
     public class SpellData : MonoBehaviour
     {
-        public int Tier;
-        public int NestId;
-        public int MinProbabilityRange;
-        public int MaxProbabilityRange;
+        // Параметры заклинания
+            
+        public int Tier;                    // уровень
+        public int NestId;                  // номер позиции на поле
+        public int MinProbabilityRange;     // минимальное значение диапазона вероятности
+        public int MaxProbabilityRange;     // максимальное значение диапазона вероятности
     }
 }

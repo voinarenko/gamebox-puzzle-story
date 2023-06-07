@@ -8,13 +8,11 @@ namespace Assets.Scripts.Stats
     {
         // Здоровье игрока
 
-        #region Переменные
+        [SerializeField] private TMP_Text _healthText;      // здоровье на экране
 
-        [SerializeField] private TMP_Text _healthText;
-
-        #endregion
-
-        // Инициализация
+        /// <summary>
+        /// Awake is called when the script instance is being loaded.
+        /// </summary>
         private void Awake()
         {
             MaxHealth = 150;            // Стартовое здоровье
@@ -25,7 +23,6 @@ namespace Assets.Scripts.Stats
         private void Update()
         {
             _healthText.text = CurrentHealth.ToString(CultureInfo.InvariantCulture);
-            //if (!IsAlive) {PlayerDead();}
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Assets.Scripts.Stats
     {
         // «ащита игрока
 
-        [SerializeField] private TMP_Text _defenseText;     // отображение защиты
+        [SerializeField] private TMP_Text _defenseText;     // отображение защиты на экране
         [SerializeField] private GameObject[] _images;      // массив изображений игрока
 
         /// <summary>

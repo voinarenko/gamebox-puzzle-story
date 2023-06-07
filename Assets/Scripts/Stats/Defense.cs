@@ -7,7 +7,7 @@ namespace Assets.Scripts.Stats
         // Защита
 
         [SerializeField] protected float MinDefense;             // минимальное значение защиты
-        protected readonly float MaxDefense = 100;               // максимальное значение защиты
+        [SerializeField] protected float MaxDefense = 100;       // максимальное значение защиты
         [SerializeField] protected float CurrentDefense;         // текущее значение защиты
         [SerializeField] protected float DefenseAmount;          // значение повышения защиты
 

@@ -8,7 +8,6 @@ namespace Assets.Scripts
     {
         // Управление слияниями
 
-
         #region Переменные
 
         private GameObject _self;                                                                   // перетаскиваемый объект
