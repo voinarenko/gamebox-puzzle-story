@@ -64,7 +64,6 @@ namespace Assets.Scripts
         /// <param name="eventData"></param>
         public override void OnPointerUp(PointerEventData eventData)
         {
-            Debug.Log("Pointer Up!");
             _spellGenerator.TurnCollidersOn();
             if (_canBeMerged)
             {
@@ -93,10 +92,8 @@ namespace Assets.Scripts
         /// <param name="collision">целевой объект</param>
         public void OnTriggerStay2D(Collider2D collision)
         {
-            Debug.Log("Triggered!");
             if (!collision.CompareTag(tag) ||
                 GetComponent<SpellData>().Tier != collision.GetComponent<SpellData>().Tier) return;
-            Debug.Log("Match!");
             _self = gameObject;
             _target = collision.gameObject;
             _canBeMerged = true;
