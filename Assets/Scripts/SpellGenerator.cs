@@ -405,7 +405,8 @@ namespace Assets.Scripts
             IsAnimating = true;
             var selected = GameObject.FindWithTag("Selected");                         // находим выделенный объект
             Vector2 moveTo = target.transform.position;                                       // задаём координаты движения
-            selected.transform.DOMove(moveTo, 0.1f).OnComplete(() =>                  // запускаем анимацию перемещения, по завершению:
+            selected.GetComponent<SpriteRenderer>().sortingOrder = 2;                           // переносим объект на передний план
+            selected.transform.DOMove(moveTo, 0.1f).OnComplete(() =>                 // запускаем анимацию перемещения, по завершению:
             {
                 NextTierSpell(moveTo, target.GetComponent<SpellData>().NestId);               // создаём новый объект уровнем выше вместо текущего
                 FreeNest(selected);                                                             // освобождаем место на поле
